@@ -51,8 +51,8 @@ Windows系统（已测试）；Linux系统（未测试）、macos（未测试）
 
 ## 下载
 
-GitHub:[下载地址](https://github.com/Aye10032/YouTubeDownLoader/releases/latest)        
-Gitee(国内镜像):[下载地址](https://gitee.com/aye10032/YouTubeDownLoader/releases/v6.0.0)
+GitHub:[下载地址](https://github.com/Redstone-Tech-Reupload-Group/YouTubeDownLoader/releases/latest)        
+Gitee(国内镜像):[下载地址](https://gitee.com/aye10032/YouTubeDownLoader/releases/v6.2.0)
 
 
 
