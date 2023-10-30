@@ -1,31 +1,29 @@
-UploadInterface {
-    border: 1px solid rgb(36, 36, 36);
+DownloadInterface,UploadInterface,VideoTransInterface {
+    border: 1px solid rgb(229, 229, 229);
     border-right: none;
     border-bottom: none;
     border-top-left-radius: 10px;
-    background-color: rgb(51, 51, 51);
+    background-color: rgb(249, 249, 249);
 }
 
 #Title{
     font-size: 24px;
     font-family: 'Segoe UI', 'Microsoft YaHei';
-    color: white;
 }
 
 #Text{
     font-size: 14px;
     font-family: 'Segoe UI', 'Microsoft YaHei';
-    color: white;
 }
 
 #content {
-    color: rgb(208, 208, 208);
+    color: rgb(118, 118, 118);
     font-size: 12px;
     font-family: 'Segoe UI', 'Microsoft YaHei';
 }
 
 LineEdit{
-    border: 1px solid white;
+    border: 1px solid black;
 }
 
 #desc{
@@ -34,12 +32,12 @@ LineEdit{
 }
 
 ScrollArea {
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(249, 249, 249);
     border: none;
 }
 
 QWidget#ScrollWidget{
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(249, 249, 249);
 }
 
 QScrollBar {

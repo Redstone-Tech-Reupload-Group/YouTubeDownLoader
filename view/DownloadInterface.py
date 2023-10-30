@@ -205,7 +205,7 @@ class DownloadInterface(QFrame):
         self.video_title_label.setObjectName('Text')
         self.reprint_info_label.setObjectName('Text')
 
-        StyleSheet.DOWNLOAD.apply(self)
+        StyleSheet.SAMPLE.apply(self)
 
     def connect_signal(self):
         self.auto_quality_btn.checkedChanged.connect(self.auto_quality_btn_changed)

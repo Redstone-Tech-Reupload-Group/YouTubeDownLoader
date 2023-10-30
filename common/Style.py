@@ -9,9 +9,8 @@ class StyleSheet(StyleSheetBase, Enum):
     """ Style sheet  """
 
     MAIN_WINDOW = 'main'
-    DOWNLOAD = 'download_interface'
+    SAMPLE = 'sample_interface'
     SCROLL = 'scroll_interface'
-    UPLOAD = 'upload_interface'
     CARD = 'video_card'
 
     def path(self, theme=Theme.AUTO):
@@ -28,6 +27,7 @@ class MyIcon(FluentIconBase, Enum):
     NUMBER = 'number'
     PLAY = 'play'
     SERVER = 'server'
+    TOOL = 'tool'
 
     def path(self, theme=Theme.AUTO):
         return f'{BASE_DIR}/res/icons/{self.value}_{getIconColor(theme)}.svg'

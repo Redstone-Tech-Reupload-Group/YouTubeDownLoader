@@ -239,7 +239,7 @@ class UploadInterface(QFrame):
         self.video_description_label.setObjectName('Text')
         self.dynamic_label.setObjectName('Text')
 
-        StyleSheet.UPLOAD.apply(self)
+        StyleSheet.SAMPLE.apply(self)
 
     def connect_signal(self):
         self.cover_path_btn.clicked.connect(self.on_cover_path_btn_clicked)
