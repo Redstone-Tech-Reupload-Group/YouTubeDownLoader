@@ -6,6 +6,7 @@ from qfluentwidgets import FluentIcon as FIF
 
 from common.Config import cfg
 from common.MyWidget import RangeSettingCard, TextDialog, DistListSettingCard
+from common.SignalBus import signal_bus
 from common.Style import StyleSheet, MyIcon
 
 
@@ -102,6 +103,13 @@ class SettingInterface(QFrame):
             self.tr('Change the theme color of you application'),
             self.system_setting_group
         )
+        self.mica_card = SwitchSettingCard(
+            FIF.TRANSPARENT,
+            self.tr('Mica effect'),
+            self.tr('Apply semi transparent to windows and surfaces'),
+            cfg.mica_enabled,
+            self.system_setting_group
+        )
         self.language_card = ComboBoxSettingCard(
             cfg.language,
             FIF.LANGUAGE,
@@ -130,6 +138,7 @@ class SettingInterface(QFrame):
 
         self.system_setting_group.addSettingCard(self.theme_card)
         self.system_setting_group.addSettingCard(self.theme_color_card)
+        self.system_setting_group.addSettingCard(self.mica_card)
         self.system_setting_group.addSettingCard(self.language_card)
 
         self.expand_layout.setSpacing(28)
@@ -177,6 +186,7 @@ class SettingInterface(QFrame):
         )
 
         self.theme_color_card.colorChanged.connect(setThemeColor)
+        self.mica_card.checkedChanged.connect(signal_bus.mica_enable_changed)
 
     def show_restart_tooltip(self):
         """ show restart tooltip """
@@ -188,10 +198,8 @@ class SettingInterface(QFrame):
 
     def on_theme_changed(self, theme: Theme):
         """ theme changed slot """
-        # change the theme of qfluentwidgets
         setTheme(theme)
 
-        # chang the theme of setting interface
         self.set_qss()
 
     def on_reprint_id_card_clicked(self):

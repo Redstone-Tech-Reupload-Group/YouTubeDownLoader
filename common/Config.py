@@ -1,9 +1,10 @@
+import sys
 import time
 from enum import Enum
 
 from PyQt5.QtCore import QLocale
 from qfluentwidgets import qconfig, OptionsConfigItem, OptionsValidator, QConfig, ConfigItem, \
-    RangeConfigItem, RangeValidator, BoolValidator, ConfigSerializer, FolderValidator
+    RangeConfigItem, RangeValidator, BoolValidator, ConfigSerializer, FolderValidator, Theme
 
 from Path import BASE_DIR
 
@@ -36,6 +37,10 @@ class LanguageSerializer(ConfigSerializer):
         return Language(QLocale(value)) if value != "Auto" else Language.AUTO
 
 
+def is_win11():
+    return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
+
+
 class Config(QConfig):
     reprint_id = ConfigItem(
         'DownloadSetting', 'Reprint', ''
@@ -62,6 +67,7 @@ class Config(QConfig):
         "AdvancedSetting", "ApiServer", "", restart=True
     )
 
+    mica_enabled = ConfigItem("System", "MicaEnabled", is_win11(), BoolValidator())
     language = OptionsConfigItem(
         "System", "Language", Language.AUTO, OptionsValidator(Language), LanguageSerializer(), restart=True)
 

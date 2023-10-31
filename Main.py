@@ -57,7 +57,8 @@ class Window(FluentWindow):
         self.addSubInterface(self.tool_interface, MyIcon.TOOL, self.tr('Tool'), pos)
 
         self.addSubInterface(self.info_interface, FIF.INFO, self.tr('About'), position=NavigationItemPosition.BOTTOM)
-        self.addSubInterface(self.setting_interface, FIF.SETTING, self.tr('Setting'), position=NavigationItemPosition.BOTTOM)
+        self.addSubInterface(self.setting_interface, FIF.SETTING, self.tr('Setting'),
+                             position=NavigationItemPosition.BOTTOM)
 
         self.navigationInterface.setExpandWidth(200)
 
@@ -65,6 +66,8 @@ class Window(FluentWindow):
         self.resize(650, 750)
         self.setWindowIcon(QIcon(f'{BASE_DIR}/res/icons/logo.ico'))
         self.setWindowTitle('YoutubeDownloader V' + VERSION)
+
+        self.setMicaEffectEnabled(cfg.get(cfg.mica_enabled))
 
         self.splash_screen = SplashScreen(self.windowIcon(), self)
         self.splash_screen.setIconSize(QSize(106, 106))
@@ -80,6 +83,7 @@ class Window(FluentWindow):
         self.show()
 
     def connect_signal(self):
+        signal_bus.mica_enable_changed.connect(self.setMicaEffectEnabled)
         signal_bus.path2_download_signal.connect(self.local2_download)
         signal_bus.url2_download_signal.connect(self.url2_download)
         signal_bus.path2_upload_signal.connect(self.path2_upload)
