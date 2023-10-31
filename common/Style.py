@@ -10,6 +10,7 @@ class StyleSheet(StyleSheetBase, Enum):
 
     MAIN_WINDOW = 'main'
     SAMPLE = 'sample_interface'
+    CARD_INF = 'card_interface'
     SCROLL = 'scroll_interface'
     CARD = 'video_card'
 
