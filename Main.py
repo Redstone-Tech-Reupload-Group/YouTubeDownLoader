@@ -2,122 +2,82 @@ import logging
 import os
 import sys
 
-from PyQt5.QtCore import Qt, QTranslator
+from PyQt5.QtCore import Qt, QTranslator, QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QLabel, QFrame, QHBoxLayout, QStackedWidget
-from qfluentwidgets import NavigationInterface, NavigationItemPosition, setTheme, Theme, PopUpAniStackedWidget, \
-                            FluentTranslator, Dialog
+from PyQt5.QtWidgets import QApplication
+from qfluentwidgets import NavigationItemPosition, setTheme, Theme, FluentTranslator, Dialog, SplashScreen, \
+    FluentWindow, MSFluentWindow
 from qfluentwidgets import FluentIcon as FIF
-from qframelesswindow import FramelessWindow, StandardTitleBar
 
 from Path import BASE_DIR
 from common.Config import cfg, VERSION, LOG_PATH, LOG_NAME
 from common.SignalBus import signal_bus
-from common.Style import StyleSheet
+from common.Style import StyleSheet, MyIcon
 from view.DownloadInterface import DownloadInterface
 from view.InfoInterface import InfoInterface
 from view.LocalVideoInterface import LocalVideoInterface
 from view.SettingInterface import SettingInterface
 from view.SubscribeInterface import SubscribeInterface
 from view.TodoListInterface import TodoListInterface
+from view.ToolInterface import ToolInterface
 from view.UploadInterface import UploadInterface
 
 
-class Window(FramelessWindow):
+class Window(FluentWindow):
     def __init__(self):
         super().__init__()
-        self.setTitleBar(StandardTitleBar(self))
-
-        setTheme(Theme.LIGHT)
-
-        self.h_box_layout = QHBoxLayout(self)
-        self.view = PopUpAniStackedWidget(self)
-        self.navigation_interface = NavigationInterface(self, showMenuButton=True, showReturnButton=False)
-        self.stack_widget = QStackedWidget(self)
+        self.splash_screen: SplashScreen = None
+        self.init_window()
 
         self.download_interface = DownloadInterface('edit_interface', self)
         self.upload_interface = UploadInterface('upload_interface', self)
         self.local_video_interface = LocalVideoInterface('local_video_interface', self)
         self.subscribe_interface = SubscribeInterface('subscribe_interface', self)
         self.todo_list_interface = TodoListInterface('todo_list_interface', self)
+        self.tool_interface = ToolInterface('tool_interface', self)
+
         self.info_interface = InfoInterface('info_interface', self)
         self.setting_interface = SettingInterface('setting_interface', self)
 
-        self.stack_widget.addWidget(self.download_interface)
-        self.stack_widget.addWidget(self.upload_interface)
-        self.stack_widget.addWidget(self.local_video_interface)
-        self.stack_widget.addWidget(self.subscribe_interface)
-        self.stack_widget.addWidget(self.todo_list_interface)
-        self.stack_widget.addWidget(self.info_interface)
-        self.stack_widget.addWidget(self.setting_interface)
-
-        # initialize layout
-        self.init_layout()
-
-        # add items to navigation interface
         self.init_navigation()
 
-        self.init_window()
         self.connect_signal()
-
-    def init_layout(self):
-        self.h_box_layout.setSpacing(0)
-        self.h_box_layout.setContentsMargins(0, self.titleBar.height(), 0, 0)
-        self.h_box_layout.addWidget(self.navigation_interface)
-        self.h_box_layout.addWidget(self.stack_widget)
-        self.h_box_layout.setStretchFactor(self.stack_widget, 1)  # 缩放因子
+        self.splash_screen.finish()
 
     def init_navigation(self):
-        self.navigation_interface.addItem(routeKey=self.download_interface.objectName(), icon=FIF.EDIT,
-                                          text=self.tr('Download'),
-                                          onClick=lambda: self.switch_to(self.download_interface))
-        self.navigation_interface.addItem(routeKey=self.upload_interface.objectName(), icon=FIF.SEND,
-                                          text=self.tr('Upload'),
-                                          onClick=lambda: self.switch_to(self.upload_interface))
-        self.navigation_interface.addItem(routeKey=self.local_video_interface.objectName(), icon=FIF.HISTORY,
-                                          text=self.tr('Local Video'),
-                                          onClick=lambda: self.switch_to(self.local_video_interface),
-                                          position=NavigationItemPosition.SCROLL)
-        self.navigation_interface.addItem(routeKey=self.subscribe_interface.objectName(), icon=FIF.RINGER,
-                                          text=self.tr('Subscription Information'),
-                                          onClick=self.switch_to_subscribe,
-                                          position=NavigationItemPosition.SCROLL)
-        self.navigation_interface.addItem(routeKey=self.todo_list_interface.objectName(), icon=FIF.FEEDBACK,
-                                          text=self.tr('TODO List'),
-                                          onClick=self.switch_to_todo,
-                                          position=NavigationItemPosition.SCROLL)
 
-        self.navigation_interface.addSeparator()
+        self.addSubInterface(self.download_interface, FIF.EDIT, self.tr('Download'))
+        self.addSubInterface(self.upload_interface, FIF.SEND, self.tr('Upload'))
+        self.navigationInterface.addSeparator()
 
-        self.navigation_interface.addItem(routeKey=self.info_interface.objectName(), icon=FIF.INFO,
-                                          text=self.tr('Info'),
-                                          onClick=lambda: self.switch_to(self.info_interface),
-                                          position=NavigationItemPosition.BOTTOM)
-        self.navigation_interface.addItem(routeKey=self.setting_interface.objectName(), icon=FIF.SETTING,
-                                          text=self.tr('Setting'),
-                                          onClick=lambda: self.switch_to(self.setting_interface),
-                                          position=NavigationItemPosition.BOTTOM)
+        pos = NavigationItemPosition.SCROLL
+        self.addSubInterface(self.local_video_interface, FIF.HISTORY, self.tr('Local Video'), pos)
+        self.addSubInterface(self.subscribe_interface, FIF.RINGER, self.tr('Subscription Information'), pos)
+        self.addSubInterface(self.todo_list_interface, FIF.FEEDBACK, self.tr('Todo List'), pos)
+        self.addSubInterface(self.tool_interface, MyIcon.TOOL, self.tr('Tool'), pos)
 
-        self.navigation_interface.setExpandWidth(200)
+        self.addSubInterface(self.info_interface, FIF.INFO, self.tr('About'), position=NavigationItemPosition.BOTTOM)
+        self.addSubInterface(self.setting_interface, FIF.SETTING, self.tr('Setting'), position=NavigationItemPosition.BOTTOM)
 
-        self.stack_widget.currentChanged.connect(self.on_current_interface_changed)
-        self.stack_widget.setCurrentIndex(0)
-        self.navigation_interface.setCurrentItem(self.download_interface.objectName())
+        self.navigationInterface.setExpandWidth(200)
 
     def init_window(self):
         self.resize(650, 750)
         self.setWindowIcon(QIcon(f'{BASE_DIR}/res/icons/logo.ico'))
         self.setWindowTitle('YoutubeDownloader V' + VERSION)
 
+        self.splash_screen = SplashScreen(self.windowIcon(), self)
+        self.splash_screen.setIconSize(QSize(106, 106))
+        self.splash_screen.raise_()
+
         desktop = QApplication.desktop().availableGeometry()
-        w, h = desktop.width(), desktop.height()
-        self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
+        _w, _h = desktop.width(), desktop.height()
+        self.move(_w // 2 - self.width() // 2, _h // 2 - self.height() // 2)
 
-        self.navigation_interface.displayModeChanged.connect(
-            self.titleBar.raise_)
-        self.titleBar.raise_()
-
+        setTheme(Theme.LIGHT)
         self.set_qss()
+
+        self.show()
 
     def connect_signal(self):
         signal_bus.path2_download_signal.connect(self.local2_download)
@@ -140,8 +100,8 @@ class Window(FramelessWindow):
         self.switch_to(self.upload_interface)
 
     def switch_to(self, widget):
-        self.stack_widget.setCurrentWidget(widget)
-        self.navigation_interface.setCurrentItem(widget.objectName())
+        self.stackedWidget.setCurrentWidget(widget)
+        self.navigationInterface.setCurrentItem(widget.objectName())
 
     def switch_to_subscribe(self):
         if cfg.get(cfg.api_token) == '':
@@ -230,6 +190,7 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
     # internationalization
     locale = cfg.get(cfg.language).value
@@ -242,4 +203,5 @@ if __name__ == '__main__':
 
     w = Window()
     w.show()
+
     app.exec_()
