@@ -2,16 +2,15 @@ from typing import Union
 
 import qfluentwidgets
 from PyQt5.QtCore import pyqtSignal, Qt, QRectF
-from PyQt5.QtGui import QIcon, QPixmap, QPainter
+from PyQt5.QtGui import QIcon, QPixmap, QPainter, QDragEnterEvent
 from PyQt5.QtWidgets import QLabel, QWidget, QVBoxLayout, QGridLayout, QTableWidgetItem, QFrame, \
     QHBoxLayout, QToolButton
 from qfluentwidgets import SettingCard, FluentIconBase, Slider, qconfig, LineEdit, TableWidget, \
-    TextWrap, PixmapLabel, ExpandLayout, ExpandSettingCard, ConfigItem, PushButton, drawIcon, isDarkTheme
+    TextWrap, PixmapLabel, ExpandLayout, ExpandSettingCard, ConfigItem, PushButton, drawIcon
 from qfluentwidgets.components.dialog_box.dialog import Dialog
 from qfluentwidgets import FluentIcon as FIF
 from qframelesswindow import TitleBar
 
-from Path import BASE_DIR
 from common.SignalBus import signal_bus
 from common.Style import StyleSheet, MyIcon
 
@@ -516,3 +515,19 @@ class UploadCard(QFrame):
 
     def on_del_btn_clicked(self):
         self.del_signal.emit(self.objectName())
+
+
+class FileLineEdit(LineEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        if event.mimeData().hasUrls():
+            url = event.mimeData().urls()[0]
+            self.setText(url.toLocalFile())
+            event.acceptProposedAction()

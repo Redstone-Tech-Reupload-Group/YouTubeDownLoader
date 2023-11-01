@@ -25,6 +25,7 @@ VideoTransInterface {
 
 LineEdit{
     border: 1px solid black;
+    font-size: 10px;
 }
 
 #desc{

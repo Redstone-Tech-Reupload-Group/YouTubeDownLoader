@@ -61,7 +61,6 @@ class Download(QThread):
         super().__init__()
         self.url = url
         self.ydl_opts = ydl_opts
-        # print(ydl_opts)
 
     def run(self):
         try:
