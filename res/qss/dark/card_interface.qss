@@ -29,7 +29,7 @@ LineEdit{
     border: 1px solid white;
 }
 
-#desc{
+TextEdit{
     font-size: 12px;
     font-family: 'Segoe UI', 'Microsoft YaHei';
 }
