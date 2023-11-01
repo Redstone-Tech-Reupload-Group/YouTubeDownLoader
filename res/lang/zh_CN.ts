@@ -397,14 +397,19 @@
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../../view/pivots/SubtitleWrapInterface.py" line="159"/>
+        <location filename="../../view/pivots/SubtitleWrapInterface.py" line="163"/>
         <source>process is running, please wait until it done.</source>
         <translation>压制中，请稍后。</translation>
     </message>
     <message>
-        <location filename="../../view/pivots/SubtitleWrapInterface.py" line="176"/>
+        <location filename="../../view/pivots/SubtitleWrapInterface.py" line="180"/>
         <source>convert done</source>
         <translation>压制完毕</translation>
+    </message>
+    <message>
+        <location filename="../../view/pivots/SubtitleWrapInterface.py" line="141"/>
+        <source>input or output can not be empty</source>
+        <translation>输入或输出不能为空</translation>
     </message>
 </context>
 <context>
@@ -509,14 +514,19 @@
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../../view/pivots/VideoTransInterface.py" line="108"/>
+        <location filename="../../view/pivots/VideoTransInterface.py" line="112"/>
         <source>process is running, please wait until it done.</source>
         <translation>处理中，请稍后。</translation>
     </message>
     <message>
-        <location filename="../../view/pivots/VideoTransInterface.py" line="125"/>
+        <location filename="../../view/pivots/VideoTransInterface.py" line="129"/>
         <source>convert done</source>
         <translation>处理完毕</translation>
+    </message>
+    <message>
+        <location filename="../../view/pivots/VideoTransInterface.py" line="99"/>
+        <source>input or output can not be empty</source>
+        <translation>输入或输出不能为空</translation>
     </message>
 </context>
 <context>

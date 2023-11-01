@@ -95,6 +95,10 @@ class VideoTransInterface(QFrame):
         self.output_path.setText(file[:-4] + '_yuv420p.mp4')
 
     def convert_video(self):
+        if self.input_path.text() == '' or self.output_path.text() == '':
+            self.show_finish_tooltip(self.tr('input or output can not be empty'), WARNING)
+            return
+
         if self.convert_process is None:
             self.convert_process = QProcess()
             self.convert_process.readyReadStandardOutput.connect(self.handle_stdout)

@@ -137,6 +137,10 @@ class SubtitleWrapInterface(QFrame):
 
     # ffmpeg -i input.mp4 -vf subtitles=sub.ass -c:v libx264 -crf 22.5 -preset ultrafast -movflags +faststart -c:a copy output.mp4
     def wrap_subtitle(self):
+        if self.video_input_path.text() == '' or self.output_path.text() == '':
+            self.show_finish_tooltip(self.tr('input or output can not be empty'), WARNING)
+            return
+
         if self.wrap_process is None:
             self.wrap_process = QProcess()
             self.wrap_process.readyReadStandardOutput.connect(self.handle_stdout)
