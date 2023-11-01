@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel, QStackedWidget
 from qfluentwidgets import SegmentedWidget
 
 from common.Style import StyleSheet
+from view.pivots.SubtileWrapInterface import SubtitleWrapInterface
 from view.pivots.VideoTransInterface import VideoTransInterface
 
 
@@ -18,7 +19,7 @@ class ToolInterface(QFrame):
         self.layout = QVBoxLayout(self)
 
         self.color_space_interface = VideoTransInterface(self)
-        self.album_interface = QLabel('Album Interface', self)
+        self.subtitle_interface = SubtitleWrapInterface(self)
 
         self.init_ui()
         self.setObjectName(text)
@@ -26,8 +27,8 @@ class ToolInterface(QFrame):
     def init_ui(self):
         self.title_label.setAlignment(Qt.AlignHCenter)
 
-        self.add_sub_interface(self.color_space_interface, 'ColorSpaceInterface', 'Song')
-        self.add_sub_interface(self.album_interface, 'albumInterface', 'Album')
+        self.add_sub_interface(self.color_space_interface, 'ColorSpaceInterface', self.tr('Convert Color Space'))
+        self.add_sub_interface(self.subtitle_interface, 'SubtitleInterface', self.tr('Wrap Subtitle'))
 
         self.layout.addWidget(self.title_label)
         self.layout.addWidget(self.pivot)
