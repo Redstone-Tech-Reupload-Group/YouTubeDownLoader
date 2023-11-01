@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel, QStackedWidget
 from qfluentwidgets import SegmentedWidget
 
 from common.Style import StyleSheet
-from view.pivots.SubtileWrapInterface import SubtitleWrapInterface
+from view.pivots.SubtitleWrapInterface import SubtitleWrapInterface
 from view.pivots.VideoTransInterface import VideoTransInterface
 
 
