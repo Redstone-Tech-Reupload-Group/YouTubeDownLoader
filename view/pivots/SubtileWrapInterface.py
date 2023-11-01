@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QProcess
 from PyQt5.QtWidgets import QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
-from qfluentwidgets import ToolButton, LineEdit, PrimaryPushButton, TextEdit, InfoBar
+from qfluentwidgets import ToolButton, LineEdit, PrimaryPushButton, TextEdit, InfoBar, SwitchButton
 
 from qfluentwidgets import FluentIcon as FIF
 
@@ -26,6 +26,8 @@ class SubtitleWrapInterface(QFrame):
         self.output_label = QLabel(self.tr('Output Path'), self)
         self.output_path = LineEdit(self)
 
+        self.quality_btn = SwitchButton(self)
+        self.quality_label = QLabel(self.tr('Compress at Sametime'))
         self.start_btn = PrimaryPushButton(self.tr('Start'), self)
 
         self.log_output = TextEdit(self)
@@ -85,7 +87,10 @@ class SubtitleWrapInterface(QFrame):
         widget_4 = QWidget()
         layout_4 = QHBoxLayout()
         layout_4.setContentsMargins(0, 5, 0, 5)
-        layout_4.addWidget(QLabel(), stretch=3)
+        layout_4.addWidget(self.quality_label, stretch=1)
+        self.quality_btn.setChecked(cfg.get(cfg.compress_video))
+        layout_4.addWidget(self.quality_btn)
+        layout_4.addWidget(QLabel(' '), stretch=1)
         layout_4.addWidget(self.start_btn, stretch=1)
         widget_4.setLayout(layout_4)
         self.main_layout.addWidget(widget_4)
@@ -102,12 +107,14 @@ class SubtitleWrapInterface(QFrame):
         self.video_input_label.setObjectName('Text')
         self.sub_input_label.setObjectName('Text')
         self.output_label.setObjectName('Text')
+        self.quality_label.setObjectName('Text')
 
         StyleSheet.CARD_INF.apply(self)
 
     def connect_signal(self):
         self.video_input_btn.clicked.connect(self.choose_video)
         self.sub_input_btn.clicked.connect(self.choose_subtitle)
+        self.quality_btn.checkedChanged.connect(self.quality_btn_changed)
         self.start_btn.clicked.connect(self.wrap_subtitle)
 
     def choose_video(self):
@@ -125,6 +132,9 @@ class SubtitleWrapInterface(QFrame):
                                               'Subtitle files (*.ass *.srt)', options=options)
         self.sub_input_path.setText(file)
 
+    def quality_btn_changed(self, is_checked: bool):
+        cfg.set(cfg.compress_video, is_checked)
+
     # ffmpeg -i input.mp4 -vf subtitles=sub.ass -c:v libx264 -crf 22.5 -preset ultrafast -movflags +faststart -c:a copy output.mp4
     def wrap_subtitle(self):
         if self.wrap_process is None:
@@ -134,10 +144,16 @@ class SubtitleWrapInterface(QFrame):
             self.wrap_process.finished.connect(self.convert_finished)
 
             sub_path = self.sub_input_path.text().replace('\\', '\\\\').replace(':', '\\:')
-            args = ['-y', '-i', self.video_input_path.text(),
-                    '-vf', f'subtitles=\'{sub_path}\'', '-c:v', 'libx264',
-                    '-crf', '22.5', '-preset', 'ultrafast', '-movflags', '+faststart',
-                    '-c:a', 'copy', self.output_path.text()]
+            if cfg.get(cfg.compress_video):
+                args = ['-y', '-i', self.video_input_path.text(),
+                        '-vf', f'subtitles=\'{sub_path}\'', '-c:v', 'libx264',
+                        '-crf', '22.5', '-preset', 'ultrafast', '-movflags', '+faststart',
+                        '-c:a', 'copy', self.output_path.text()]
+            else:
+                args = ['-y', '-i', self.video_input_path.text(),
+                        '-vf', f'subtitles=\'{sub_path}\'',
+                        self.output_path.text()]
+
             self.wrap_process.start("ffmpeg", args)
         else:
             self.show_finish_tooltip(self.tr('process is running, please wait until it done.'), WARNING)

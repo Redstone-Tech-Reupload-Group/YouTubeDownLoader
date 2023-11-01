@@ -67,6 +67,10 @@ class Config(QConfig):
         "AdvancedSetting", "ApiServer", "", restart=True
     )
 
+    compress_video = ConfigItem(
+        "VideoSetting", "CompressVideo", True, BoolValidator()
+    )
+
     mica_enabled = ConfigItem("System", "MicaEnabled", is_win11(), BoolValidator())
     language = OptionsConfigItem(
         "System", "Language", Language.AUTO, OptionsValidator(Language), LanguageSerializer(), restart=True)
