@@ -1,13 +1,13 @@
 <!doctype html>
-<html style='font-size:18px !important'>
+<html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 
-<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
 .mac-os-11 { --title-bar-height:28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4, h5 { white-space: pre-wrap; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
@@ -205,98 +205,55 @@ mark .md-meta { color: rgb(0, 0, 0); }
 mjx-container { break-inside: avoid; }
 
 
-/* cyrillic-ext */
-/* cyrillic */
-/* greek-ext */
-/* greek */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-/* cyrillic-ext */
-/* cyrillic */
-/* greek-ext */
-/* greek */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-/* cyrillic-ext */
-/* cyrillic */
-/* greek-ext */
-/* greek */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-/* cyrillic-ext */
-/* cyrillic */
-/* greek-ext */
-/* greek */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-@font-face {
-    font-family: 'Source Sans Pro';
-    font-style: normal;
-    font-weight: 600;
-    src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'), url('file:///C://Users//yeyu6//AppData//Roaming//Typora/themes/vue/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdu.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}@import '';
-
 :root {
-    --side-bar-bg-color: #fff;
+    --side-bar-bg-color: #fafafa;
     --control-text-color: #777;
-    --font-sans-serif: 'Ubuntu', 'Source Sans Pro', sans-serif !important;
-    --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
 }
 
-html {
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
-    font-family: var(--font-sans-serif);
-    color: #34495e;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.6rem;
-    letter-spacing: 0;
-    margin: 0;
-    overflow-x: hidden;
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
 }
 
 #write {
     max-width: 860px;
-    margin: 0 auto;
-    padding: 20px 30px 100px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
 }
 
-#write p {
-    line-height: 1.6rem;
-    word-spacing: .05rem;
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
 }
 
-#write ol li {
-    padding-left: 0.5rem;
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
 }
 
 #write > ul:first-child,
-#write > ol:first-child {
+#write > ol:first-child{
     margin-top: 30px;
 }
 
-body > *:first-child {
-    margin-top: 0 !important;
-}
-
-body > *:last-child {
-    margin-bottom: 0 !important;
-}
-
 a {
-    color: #42b983;
-    font-weight: 600;
-    padding: 0 2px;
-    text-decoration: none;
+    color: #4183C4;
 }
-
 h1,
 h2,
 h3,
@@ -310,7 +267,6 @@ h6 {
     line-height: 1.4;
     cursor: text;
 }
-
 h1:hover a.anchor,
 h2:hover a.anchor,
 h3:hover a.anchor,
@@ -319,89 +275,84 @@ h5:hover a.anchor,
 h6:hover a.anchor {
     text-decoration: none;
 }
-
 h1 tt,
 h1 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
 h2 tt,
 h2 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
 h3 tt,
 h3 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
 h4 tt,
 h4 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
 h5 tt,
 h5 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
 h6 tt,
 h6 code {
-    font-size: inherit !important;
+    font-size: inherit;
 }
-
-h2 a,
-h3 a {
-    color: #34495e;
-}
-
 h1 {
-    padding-bottom: .4rem;
-    font-size: 2.2rem;
-    line-height: 1.3;
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
 }
 
-h2 {
-    font-size: 1.75rem;
-    line-height: 1.225;
-    margin: 35px 0 15px;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ddd;
-}
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
 
 h3 {
-    font-size: 1.4rem;
+    font-size: 1.5em;
     line-height: 1.43;
-    margin: 20px 0 7px;
 }
-
 h4 {
-    font-size: 1.2rem;
+    font-size: 1.25em;
 }
-
 h5 {
-    font-size: 1rem;
+    font-size: 1em;
 }
-
 h6 {
-    font-size: 1rem;
+   font-size: 1em;
     color: #777;
 }
-
 p,
 blockquote,
 ul,
 ol,
 dl,
-table {
+table{
     margin: 0.8em 0;
 }
-
-li > ol,
-li > ul {
+li>ol,
+li>ul {
     margin: 0 0;
 }
-
 hr {
     height: 2px;
     padding: 0;
@@ -412,219 +363,115 @@ hr {
     box-sizing: content-box;
 }
 
-body > h2:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child + h2 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h3:first-child,
-body > h4:first-child,
-body > h5:first-child,
-body > h6:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-a:first-child h1,
-a:first-child h2,
-a:first-child h3,
-a:first-child h4,
-a:first-child h5,
-a:first-child h6 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-h1 p,
-h2 p,
-h3 p,
-h4 p,
-h5 p,
-h6 p {
-    margin-top: 0;
-}
-
 li p.first {
     display: inline-block;
 }
-
 ul,
 ol {
     padding-left: 30px;
 }
-
 ul:first-child,
 ol:first-child {
     margin-top: 0;
 }
-
 ul:last-child,
 ol:last-child {
     margin-bottom: 0;
 }
-
 blockquote {
-    border-left: 4px solid #42b983;
-    padding: 10px 15px;
-    color: #777;
-    background-color: rgba(66, 185, 131, .1);
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
 }
-
+blockquote blockquote {
+    padding-right: 0;
+}
 table {
     padding: 0;
     word-break: initial;
 }
-
 table tr {
-    border-top: 1px solid #dfe2e5;
+    border: 1px solid #dfe2e5;
     margin: 0;
     padding: 0;
 }
-
 table tr:nth-child(2n),
 thead {
-    background-color: #fafafa;
+    background-color: #f8f8f8;
 }
-
-table tr th {
+table th {
     font-weight: bold;
     border: 1px solid #dfe2e5;
     border-bottom: 0;
-    text-align: left;
     margin: 0;
     padding: 6px 13px;
 }
-
-table tr td {
+table td {
     border: 1px solid #dfe2e5;
-    text-align: left;
     margin: 0;
     padding: 6px 13px;
 }
-
-table tr th:first-child,
-table tr td:first-child {
+table th:first-child,
+table td:first-child {
     margin-top: 0;
 }
-
-table tr th:last-child,
-table tr td:last-child {
+table th:last-child,
+table td:last-child {
     margin-bottom: 0;
 }
 
-#write strong {
-    padding: 0 1px;
+.CodeMirror-lines {
+    padding-left: 4px;
 }
 
-#write em {
-    padding: 0 5px 0 2px;
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
 }
 
-#write table thead th {
-    background-color: #f2f2f2;
-}
-
-#write .CodeMirror-gutters {
-    border-right: none;
-}
-
-#write .md-fences {
-    border: 1px solid #F4F4F4;
-    -webkit-font-smoothing: initial;
-    margin: 0.8rem 0 !important;
-    padding: 0.3rem 0 !important;
-    line-height: 1.43rem;
-    background-color: #F8F8F8 !important;
-    border-radius: 2px;
-    font-family: var(--font-monospace);
-    font-size: 0.85rem;
-    word-wrap: normal;
-}
-
-#write .CodeMirror-wrap .CodeMirror-code pre {
-    padding-left: 12px;
-}
-
-#write code, tt {
-    padding: 2px 4px;
-    border-radius: 2px;
-    font-family: var(--font-monospace);
-    font-size: 0.92rem;
-    color: #e96900;
-    background-color: #f8f8f8;
-}
-
+.md-fences,
+code,
 tt {
-    margin: 0 2px;
-}
-
-#write .md-footnote {
+    border: 1px solid #e7eaed;
     background-color: #f8f8f8;
-    color: #e96900;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
 }
 
-/* heighlight. */
-#write mark {
-    background-color: #EBFFEB;
-    border-radius: 2px;
-    padding: 2px 4px;
-    margin: 0 2px;
-    color: #222;
-    font-weight: 500;
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
 }
 
-#write del {
-    padding: 1px 2px;
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
 }
 
-.cm-s-inner .cm-link,
-.cm-s-inner.cm-link {
-    color: #22a2c9;
-}
-
-.cm-s-inner .cm-string {
-    color: #22a2c9;
-}
 
 .md-task-list-item > input {
-    margin-left: -1.3em;
+  margin-left: -1.3em;
 }
 
 @media print {
     html {
         font-size: 13px;
     }
-
-    table,
     pre {
         page-break-inside: avoid;
-    }
-
-    pre {
         word-wrap: break-word;
     }
 }
 
 .md-fences {
-    background-color: #f8f8f8;
+	background-color: #f8f8f8;
 }
-
-.md-diagram-panel {
-    position: static !important;
-}
-
 #write pre.md-meta-block {
-    padding: 1rem;
+	padding: 1rem;
     font-size: 85%;
     line-height: 1.45;
     background-color: #f7f7f7;
@@ -634,45 +481,46 @@ tt {
     margin-top: 0 !important;
 }
 
-.mathjax-block > .code-tooltip {
-    bottom: .375rem;
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
 }
 
-#write > h3.md-focus:before {
-    left: -1.5625rem;
-    top: .375rem;
+.md-mathjax-midline {
+    background: #fafafa;
 }
 
-#write > h4.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
 }
-
-#write > h5.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
 }
-
-#write > h6.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
 }
-
-.md-image > .md-meta {
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
     border-radius: 3px;
-    font-family: var(--font-monospace);
-    padding: 2px 0 0 4px;
+    padding: 2px 0px 0px 4px;
     font-size: 0.9em;
     color: inherit;
 }
 
 .md-tag {
-    color: inherit;
+    color: #a7a7a7;
+    opacity: 1;
 }
 
-.md-toc {
-    margin-top: 20px;
-    padding-bottom: 20px;
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
 }
 
 .sidebar-tabs {
@@ -691,29 +539,22 @@ tt {
     border-width: 1px;
 }
 
-#md-notification:before {
-    top: 10px;
-}
-
 /** focus mode */
-
 .on-focus-mode blockquote {
     border-left-color: rgba(85, 85, 85, 0.12);
 }
 
-header,
-.context-menu,
-.megamenu-content,
-footer {
-    font-family: var(--font-sans-serif);
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
 }
 
 .file-node-content:hover .file-node-icon,
-.file-node-content:hover .file-node-open-state {
+.file-node-content:hover .file-node-open-state{
     visibility: visible;
 }
 
 .mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
     background-color: var(--side-bar-bg-color);
 }
 
@@ -721,8 +562,31 @@ footer {
     color: #b4654d;
 }
 
-.html-for-mac .context-menu {
+/*.html-for-mac {
     --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
 }
 
 
@@ -731,6 +595,6 @@ footer {
 </head>
 <body class='typora-export os-windows'><div class='typora-export-content'>
 <div id='write'  class=''><p><span>本软件是红石科技搬运组下载及视频管理工具 </span><span>		</span>
-<span>仅供学习、参考使用</span></p><h2 id='关于'><span>关于</span></h2><p><span>版本：6.0.0</span></p><p><span>作者：</span><a href='https://github.com/Aye10032'><span>Aye10032</span></a></p><p><span>下载地址：</span><a href='https://github.com/Aye10032/YouTubeDownLoader'><span>https://github.com/Aye10032/YouTubeDownLoader</span></a></p><h2 id='使用依赖'><span>使用依赖</span></h2><ul><li><p><a href='https://github.com/yt-dlp/yt-dlp'><span>yt_dlp</span></a><span>      </span></p></li><li><p><a href='https://github.com/zhiyiYo/PyQt-Fluent-Widgets'><span>PyQt-Fluent-Widgets</span></a></p></li><li><p><a href='https://github.com/biliup/biliup'><span>biliup</span></a></p></li></ul><p>&nbsp;</p><h2 id='建议安装的第三方库'><span>建议安装的第三方库</span></h2><ul><li><p><span>ffmpeg</span></p></li><li><p><span>PhantomJS</span></p></li></ul><p>&nbsp;</p></div></div>
+<span>仅供学习、参考使用</span></p><h2 id='关于'><span>关于</span></h2><p><span>版本：6.3.0</span></p><p><span>作者：</span><a href='https://github.com/Aye10032'><span>Aye10032</span></a></p><p><span>下载地址：</span><a href='https://github.com/Aye10032/YouTubeDownLoader'><span>https://github.com/Aye10032/YouTubeDownLoader</span></a></p><h2 id='使用依赖'><span>使用依赖</span></h2><ul><li><p><a href='https://github.com/yt-dlp/yt-dlp'><span>yt_dlp</span></a><span>      </span></p></li><li><p><a href='https://github.com/zhiyiYo/PyQt-Fluent-Widgets'><span>PyQt-Fluent-Widgets</span></a></p></li><li><p><a href='https://github.com/biliup/biliup'><span>biliup</span></a></p></li></ul><p>&nbsp;</p><h2 id='建议安装的第三方库'><span>建议安装的第三方库</span></h2><ul><li><p><span>ffmpeg</span></p></li><li><p><span>PhantomJS</span></p></li></ul></div></div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+import ctypes
 import logging
 import os
 import sys
@@ -179,6 +180,20 @@ class Logger(object):
         pass
 
 
+def hideConsole():
+    """
+    Hides the console window in GUI mode. Necessary for frozen application, because
+    this application support both, command line processing AND GUI mode and theirfor
+    cannot be run via pythonw.exe.
+    """
+
+    whnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if whnd != 0:
+        ctypes.windll.user32.ShowWindow(whnd, 0)
+        # if you wanted to close the handles...
+        # ctypes.windll.kernel32.CloseHandle(whnd)
+
+
 if __name__ == '__main__':
     if not os.path.exists(LOG_PATH):
         os.makedirs(LOG_PATH)
@@ -207,5 +222,7 @@ if __name__ == '__main__':
 
     w = Window()
     w.show()
+
+    hideConsole()
 
     app.exec_()
