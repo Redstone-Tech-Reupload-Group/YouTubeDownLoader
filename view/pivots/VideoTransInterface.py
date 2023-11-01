@@ -1,10 +1,10 @@
 from PyQt5.QtCore import QProcess
 from PyQt5.QtWidgets import QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
-from qfluentwidgets import ToolButton, LineEdit, PrimaryPushButton, TextEdit, IndeterminateProgressBar, InfoBar
+from qfluentwidgets import ToolButton, LineEdit, PrimaryPushButton, TextEdit, InfoBar
 
 from qfluentwidgets import FluentIcon as FIF
 
-from common.Config import cfg
+from common.Config import cfg, SUCCESS, WARNING
 from common.MyWidget import FileLineEdit
 from common.Style import StyleSheet
 
@@ -25,8 +25,6 @@ class VideoTransInterface(QFrame):
         self.start_btn = PrimaryPushButton(self.tr('Start'), self)
 
         self.log_output = TextEdit(self)
-
-        # self.progress_bar = IndeterminateProgressBar(self)
 
         self.init_ui()
         self.connect_signal()
@@ -74,10 +72,7 @@ class VideoTransInterface(QFrame):
 
         self.log_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.main_layout.addWidget(self.log_output)
-        self.log_output.setStyleSheet('font-size: 12px;font-family: \'Segoe UI\', \'Microsoft YaHei\';')
         self.log_output.setReadOnly(True)
-
-        # self.main_layout.addWidget(self.progress_bar)
 
         self.setLayout(self.main_layout)
 
@@ -93,9 +88,9 @@ class VideoTransInterface(QFrame):
 
     def on_input_btn_clicked(self):
         options = QFileDialog.Options()
-        options.filter = "VIDEO files (*.mp4)"
-        file, _ = QFileDialog.getOpenFileName(None, "Choose Video File", cfg.get(cfg.download_folder),
-                                              "Video files (*.mp4)", options=options)
+        options.filter = 'VIDEO files (*.mp4)'
+        file, _ = QFileDialog.getOpenFileName(None, 'Choose Video File', cfg.get(cfg.download_folder),
+                                              'Video files (*.mp4)', options=options)
         self.input_path.setText(file)
         self.output_path.setText(file[:-4] + '_yuv420p.mp4')
 
@@ -109,15 +104,17 @@ class VideoTransInterface(QFrame):
                                                   self.input_path.text(),
                                                   '-vf', 'format=yuv420p',
                                                   self.output_path.text()])
+        else:
+            self.show_finish_tooltip(self.tr('process is running, please wait until it done.'), WARNING)
 
     def handle_stderr(self):
         data = self.convert_process.readAllStandardError()
-        stderr = bytes(data).decode("utf8")
+        stderr = bytes(data).decode('utf8')
         self.log_update(stderr)
 
     def handle_stdout(self):
         data = self.convert_process.readAllStandardOutput()
-        stdout = bytes(data).decode("utf8")
+        stdout = bytes(data).decode('utf8')
         self.log_update(stdout)
 
     def log_update(self, text):
@@ -125,5 +122,11 @@ class VideoTransInterface(QFrame):
 
     def convert_finished(self):
         self.log_update('done')
-        InfoBar.success('', self.tr('convert done'), parent=self.window(), duration=6000)
+        self.show_finish_tooltip(self.tr('convert done'), SUCCESS)
         self.convert_process = None
+
+    def show_finish_tooltip(self, text, tool_type: int):
+        if tool_type == SUCCESS:
+            InfoBar.success('', text, parent=self.window(), duration=6000)
+        elif tool_type == WARNING:
+            InfoBar.warning('', text, parent=self.window(), duration=6000)
