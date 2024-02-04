@@ -16,7 +16,7 @@ Windows系统（已测试）；Linux系统（未测试）、macos（未测试）
 
 将下载下来的exe文件放入一个新建文件夹中运行即可，第一次运行会在根目录下生成一些系统配置文件，之后正常运行即可。       
 使用介绍视频：     
-[![screenshot](screenshot.png)](https://www.bilibili.com/video/BV1S541157ej/)
+[![screenshot](screenshot_new.png)](https://www.bilibili.com/video/BV1yd4y1Z7nN)
 
 ## 设置
 
