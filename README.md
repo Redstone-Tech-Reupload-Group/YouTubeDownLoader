@@ -1,6 +1,6 @@
 # Video Download & Manage
 
-[![](https://img.shields.io/badge/blog-@Aye10032-red.svg?style=flat-square)](https://www.aye10032.com) ![GitHub](https://img.shields.io/github/license/Aye10032/YouTubeDownLoader) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Aye10032/YouTubeDownLoader) ![GitHub All Releases](https://img.shields.io/github/downloads/Aye10032/YouTubeDownLoader/total)
+[![](https://img.shields.io/badge/blog-@Aye10032-red.svg?style=flat-square)](https://www.aye10032.com) ![GitHub](https://img.shields.io/github/license/Aye10032/YouTubeDownLoader) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Redstone-Tech-Reupload-Group/YouTubeDownLoader) ![GitHub All Releases](https://img.shields.io/github/downloads/Redstone-Tech-Reupload-Group/YouTubeDownLoader/total)
 
 红石科技搬运组工具软件，用于自动下载视频，视频封面，字幕，同时规范简介格式。      
 搬运组空间：[https://space.bilibili.com/1311124](https://space.bilibili.com/1311124)      
@@ -46,13 +46,6 @@ Windows系统（已测试）；Linux系统（未测试）、macos（未测试）
 要使用上传功能，需要先使用此项目获取你的cookies.json：[https://github.com/biliup/biliup-rs](https://github.com/biliup/biliup-rs)
 
 之后，将生成的cookies.json文件放入config文件夹下即可
-
-
-
-## 下载
-
-GitHub:[下载地址](https://github.com/Redstone-Tech-Reupload-Group/YouTubeDownLoader/releases/latest)        
-Gitee(国内镜像):[下载地址](https://gitee.com/aye10032/YouTubeDownLoader/releases/v6.2.0)
 
 
 
