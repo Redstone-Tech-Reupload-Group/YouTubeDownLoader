@@ -1,18 +1,17 @@
 LocalVideoInterface,SettingInterface,SubscribeInterface,TodoListInterface,InfoInterface{
-    border: 1px solid rgb(229, 229, 229);
     border-right: none;
     border-bottom: none;
     border-top-left-radius: 10px;
-    background-color: rgb(249, 249, 249);
+    background-color: transparent;
 }
 
 ScrollArea {
-    background-color: rgb(249, 249, 249);
+    background-color: transparent;
     border: none;
 }
 
 QWidget#ScrollWidget{
-    background-color: rgb(249, 249, 249);
+    background-color: transparent;
 }
 
 QLabel#Title{

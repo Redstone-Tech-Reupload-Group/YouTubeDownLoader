@@ -1,9 +1,8 @@
 DownloadInterface,UploadInterface,VideoTransInterface {
-    border: 1px solid rgb(36, 36, 36);
     border-right: none;
     border-bottom: none;
     border-top-left-radius: 10px;
-    background-color: rgb(51, 51, 51);
+    background-color: transparent;
 }
 
 #Title{
@@ -34,12 +33,12 @@ LineEdit{
 }
 
 ScrollArea {
-    background-color: rgb(39, 39, 39);
+    background-color: transparent;
     border: none;
 }
 
 QWidget#ScrollWidget{
-    background-color: rgb(39, 39, 39);
+    background-color: transparent
 }
 
 QScrollBar {

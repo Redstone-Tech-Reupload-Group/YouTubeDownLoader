@@ -27,7 +27,6 @@ from view.UploadInterface import UploadInterface
 class Window(FluentWindow):
     def __init__(self):
         super().__init__()
-        self.splash_screen: SplashScreen = None
         self.init_window()
 
         self.download_interface = DownloadInterface('edit_interface', self)
@@ -39,6 +38,8 @@ class Window(FluentWindow):
 
         self.info_interface = InfoInterface('info_interface', self)
         self.setting_interface = SettingInterface('setting_interface', self)
+
+        self.navigationInterface.setAcrylicEnabled(True)
 
         self.init_navigation()
 
@@ -78,19 +79,14 @@ class Window(FluentWindow):
         _w, _h = desktop.width(), desktop.height()
         self.move(_w // 2 - self.width() // 2, _h // 2 - self.height() // 2)
 
-        setTheme(Theme.LIGHT)
-        self.set_qss()
-
         self.show()
+        QApplication.processEvents()
 
     def connect_signal(self):
         signal_bus.mica_enable_changed.connect(self.setMicaEffectEnabled)
         signal_bus.path2_download_signal.connect(self.local2_download)
         signal_bus.url2_download_signal.connect(self.url2_download)
         signal_bus.path2_upload_signal.connect(self.path2_upload)
-
-    def set_qss(self):
-        StyleSheet.MAIN_WINDOW.apply(self)
 
     def local2_download(self, path):
         self.download_interface.update_ui(path)

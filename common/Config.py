@@ -8,7 +8,7 @@ from qfluentwidgets import qconfig, OptionsConfigItem, OptionsValidator, QConfig
 
 from Path import BASE_DIR
 
-VERSION = '6.3.0'
+VERSION = '6.3.1'
 LICENCE_PATH = f'{BASE_DIR}/res/LICENCE.html'
 
 LOG_PATH = 'log'
