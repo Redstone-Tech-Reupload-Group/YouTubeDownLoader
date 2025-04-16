@@ -1,6 +1,6 @@
 # Video Download & Manage
 
-[![](https://img.shields.io/badge/blog-@Aye10032-red.svg?style=flat-square)](https://www.aye10032.com) ![GitHub](https://img.shields.io/github/license/Aye10032/YouTubeDownLoader) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Redstone-Tech-Reupload-Group/YouTubeDownLoader) ![GitHub All Releases](https://img.shields.io/github/downloads/Redstone-Tech-Reupload-Group/YouTubeDownLoader/total)
+[![](https://img.shields.io/badge/blog-@Aye10032-red.svg?style=flat-square)](https://www.aye10032.com) ![GitHub](https://img.shields.io/github/license/Redstone-Tech-Reupload-Group/YouTubeDownLoader) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Redstone-Tech-Reupload-Group/YouTubeDownLoader) ![GitHub All Releases](https://img.shields.io/github/downloads/Redstone-Tech-Reupload-Group/YouTubeDownLoader/total)
 
 红石科技搬运组工具软件，用于自动下载视频，视频封面，字幕，同时规范简介格式。      
 搬运组空间：[https://space.bilibili.com/1311124](https://space.bilibili.com/1311124)      
