@@ -1,12 +1,33 @@
 from typing import Union
 
 import qfluentwidgets
-from PySide6.QtCore import Signal, Qt, QRectF
+from PySide6.QtCore import Signal, Qt, QRectF, QSize
 from PySide6.QtGui import QIcon, QPixmap, QPainter, QDragEnterEvent
-from PySide6.QtWidgets import QLabel, QWidget, QVBoxLayout, QGridLayout, QTableWidgetItem, QFrame, \
-    QHBoxLayout, QToolButton
-from qfluentwidgets import SettingCard, FluentIconBase, Slider, qconfig, LineEdit, TableWidget, \
-    TextWrap, PixmapLabel, ExpandLayout, ExpandSettingCard, ConfigItem, PushButton, drawIcon
+from PySide6.QtWidgets import (
+    QLabel,
+    QWidget,
+    QVBoxLayout,
+    QGridLayout,
+    QTableWidgetItem,
+    QFrame,
+    QHBoxLayout,
+    QToolButton,
+)
+from qfluentwidgets import (
+    SettingCard,
+    FluentIconBase,
+    Slider,
+    qconfig,
+    LineEdit,
+    TableWidget,
+    TextWrap,
+    PixmapLabel,
+    ExpandLayout,
+    ExpandSettingCard,
+    ConfigItem,
+    PushButton,
+    drawIcon,
+)
 from qfluentwidgets.components.dialog_box.dialog import Dialog
 from qfluentwidgets import FluentIcon as FIF
 from qframelesswindow import TitleBar
@@ -16,7 +37,7 @@ from common.Style import StyleSheet, MyIcon
 
 
 class CustomTitleBar(TitleBar):
-    """ Title bar with icon and title """
+    """Title bar with icon and title"""
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -29,12 +50,12 @@ class CustomTitleBar(TitleBar):
         self.iconLabel = QLabel(self)
         self.iconLabel.setFixedSize(18, 18)
         self.hBoxLayout.insertSpacing(0, 10)
-        self.hBoxLayout.insertWidget(1, self.iconLabel, 0, Qt.AlignLeft | Qt.AlignVCenter)
+        self.hBoxLayout.insertWidget(1, self.iconLabel, 0, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.window().windowIconChanged.connect(self.setIcon)
 
         # add title label
         self.titleLabel = QLabel(self)
-        self.hBoxLayout.insertWidget(2, self.titleLabel, 0, Qt.AlignLeft | Qt.AlignVCenter)
+        self.hBoxLayout.insertWidget(2, self.titleLabel, 0, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.titleLabel.setObjectName('titleLabel')
         self.window().windowTitleChanged.connect(self.setTitle)
 
@@ -42,7 +63,7 @@ class CustomTitleBar(TitleBar):
         self.buttonLayout = QHBoxLayout()
         self.buttonLayout.setSpacing(0)
         self.buttonLayout.setContentsMargins(0, 0, 0, 0)
-        self.buttonLayout.setAlignment(Qt.AlignTop)
+        self.buttonLayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.buttonLayout.addWidget(self.minBtn)
         self.buttonLayout.addWidget(self.maxBtn)
         self.buttonLayout.addWidget(self.closeBtn)
@@ -59,7 +80,7 @@ class CustomTitleBar(TitleBar):
 
 
 class RangeSettingCard(SettingCard):
-    """ Setting card with a slider """
+    """Setting card with a slider"""
 
     valueChanged = Signal(int)
 
@@ -84,19 +105,19 @@ class RangeSettingCard(SettingCard):
         """
         super().__init__(icon, title, content, parent)
         self.configItem = configItem
-        self.slider = Slider(Qt.Horizontal, self)
+        self.slider = Slider(Qt.Orientation.Horizontal, self)
         self.valueLabel = QLabel(self)
         self.slider.setMinimumWidth(180)
 
         self.slider.setSingleStep(1)
-        self.slider.setRange(*configItem.range)
+        self.slider.setRange(configItem.range[0], configItem.range[1])
         self.slider.setValue(configItem.value)
         self.valueLabel.setNum(configItem.value)
 
         self.hBoxLayout.addStretch(1)
-        self.hBoxLayout.addWidget(self.valueLabel, 0, Qt.AlignRight)
+        self.hBoxLayout.addWidget(self.valueLabel, 0, Qt.AlignmentFlag.AlignRight)
         self.hBoxLayout.addSpacing(6)
-        self.hBoxLayout.addWidget(self.slider, 0, Qt.AlignRight)
+        self.hBoxLayout.addWidget(self.slider, 0, Qt.AlignmentFlag.AlignRight)
         self.hBoxLayout.addSpacing(16)
 
         self.valueLabel.setObjectName('valueLabel')
@@ -104,7 +125,7 @@ class RangeSettingCard(SettingCard):
         self.slider.valueChanged.connect(self.__onValueChanged)
 
     def __onValueChanged(self, value: int):
-        """ slider value changed slot """
+        """slider value changed slot"""
         self.setValue(value)
         self.valueChanged.emit(value)
 
@@ -115,7 +136,7 @@ class RangeSettingCard(SettingCard):
 
 
 class TextDialog(Dialog):
-    """ Dialog box """
+    """Dialog box"""
 
     yesSignal = Signal()
     cancelSignal = Signal()
@@ -139,7 +160,7 @@ class TextDialog(Dialog):
 
 
 class TableDialog(Dialog):
-    """ Dialog box """
+    """Dialog box"""
 
     yesSignal = Signal()
     cancelSignal = Signal()
@@ -193,9 +214,9 @@ class VideoCard(QFrame):
         self.path = content
 
         self.image_widget = PixmapLabel(self)
-        self.image_widget.setPixmap(image.scaled(
-            128, 128, Qt.KeepAspectRatio, Qt.SmoothTransformation
-        ))
+        self.image_widget.setPixmap(
+            image.scaled(128, 128, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        )
         self.title_label = QLabel(title, self)
         self.content_label = QLabel(TextWrap.wrap(content, 45, False)[0], self)
 
@@ -207,9 +228,9 @@ class VideoCard(QFrame):
         self.hBoxLayout.setContentsMargins(20, 0, 0, 0)
         self.vBoxLayout.setSpacing(2)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
-        self.vBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.vBoxLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
 
-        self.hBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.hBoxLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         self.hBoxLayout.addWidget(self.image_widget)
         self.hBoxLayout.addLayout(self.vBoxLayout)
         self.vBoxLayout.addStretch(1)
@@ -249,13 +270,13 @@ class TextCard(QFrame):
         # self.setFixedWidth(500)
         self.vBoxLayout.setSpacing(2)
         self.vBoxLayout.setContentsMargins(10, 0, 10, 0)
-        self.vBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.vBoxLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
 
         self.vBoxLayout.addStretch(1)
         self.vBoxLayout.addWidget(self.title_label)
         self.vBoxLayout.addWidget(self.url_label)
         self.vBoxLayout.addWidget(self.upload_date_label)
-        self.upload_date_label.setAlignment(Qt.AlignRight)
+        self.upload_date_label.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.upload_date_label.setContentsMargins(10, 0, 30, 0)
         self.vBoxLayout.addStretch(1)
 
@@ -281,7 +302,7 @@ class VideoCardView(QWidget):
         self.cardLayout = ExpandLayout()
 
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
-        self.vBoxLayout.setAlignment(Qt.AlignTop)
+        self.vBoxLayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.vBoxLayout.setSpacing(0)
         self.cardLayout.setContentsMargins(0, 0, 0, 0)
         self.cardLayout.setSpacing(5)
@@ -310,7 +331,7 @@ class VideoCardView(QWidget):
 
 
 class ChannelDialog(Dialog):
-    """ Dialog box """
+    """Dialog box"""
 
     yesSignal = Signal()
     cancelSignal = Signal()
@@ -343,21 +364,21 @@ class ChannelDialog(Dialog):
         self.setFixedSize(300, 300)
 
     def set_qss(self):
-        self.channel_name_label.setObjectName("contentLabel")
-        self.channel_id_label.setObjectName("contentLabel")
+        self.channel_name_label.setObjectName('contentLabel')
+        self.channel_id_label.setObjectName('contentLabel')
 
         StyleSheet.CARD.apply(self)
 
 
 class ToolButton(QToolButton):
-    """ Tool button """
+    """Tool button"""
 
     def __init__(self, icon, size: tuple, iconSize: tuple, parent=None):
         super().__init__(parent=parent)
         self.isPressed = False
         self._icon = icon
         self._iconSize = iconSize
-        self.setFixedSize(*size)
+        self.setFixedSize(QSize(size[0], size[1]))
 
     def mousePressEvent(self, e):
         self.isPressed = True
@@ -370,16 +391,14 @@ class ToolButton(QToolButton):
     def paintEvent(self, e):
         super().paintEvent(e)
         painter = QPainter(self)
-        painter.setRenderHints(QPainter.Antialiasing |
-                               QPainter.SmoothPixmapTransform)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.SmoothPixmapTransform)
         painter.setOpacity(0.63 if self.isPressed else 1)
         w, h = self._iconSize
-        drawIcon(self._icon, painter, QRectF(
-            (self.width() - w) / 2, (self.height() - h) / 2, w, h))
+        drawIcon(self._icon, painter, QRectF((self.width() - w) / 2, (self.height() - h) / 2, w, h))
 
 
 class ChannelItem(QWidget):
-    """ Folder item """
+    """Folder item"""
 
     removed = Signal(QWidget)
 
@@ -392,14 +411,13 @@ class ChannelItem(QWidget):
 
         self.setFixedHeight(53)
         self.hBoxLayout.setContentsMargins(48, 0, 60, 0)
-        self.hBoxLayout.addWidget(self.name_label, 0, Qt.AlignLeft)
+        self.hBoxLayout.addWidget(self.name_label, 0, Qt.AlignmentFlag.AlignLeft)
         self.hBoxLayout.addSpacing(16)
         self.hBoxLayout.addStretch(1)
-        self.hBoxLayout.addWidget(self.removeButton, 0, Qt.AlignRight)
-        self.hBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.hBoxLayout.addWidget(self.removeButton, 0, Qt.AlignmentFlag.AlignRight)
+        self.hBoxLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
 
-        self.removeButton.clicked.connect(
-            lambda: self.removed.emit(self))
+        self.removeButton.clicked.connect(lambda: self.removed.emit(self))
 
 
 class DistListSettingCard(ExpandSettingCard):
@@ -418,7 +436,7 @@ class DistListSettingCard(ExpandSettingCard):
 
         # initialize layout
         self.viewLayout.setSpacing(0)
-        self.viewLayout.setAlignment(Qt.AlignTop)
+        self.viewLayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.viewLayout.setContentsMargins(0, 0, 0, 0)
         for channel in self.channels:
             self.__add_channel_item(channel['name'], channel['channel_id'])
@@ -426,7 +444,7 @@ class DistListSettingCard(ExpandSettingCard):
         self.add_channel_btn.clicked.connect(self.__show_channel_dialog)
 
     def __show_channel_dialog(self):
-        """ show folder dialog """
+        """show folder dialog"""
         w = ChannelDialog(self)
         w.setTitleBarVisible(False)
         if w.exec():
@@ -440,24 +458,27 @@ class DistListSettingCard(ExpandSettingCard):
             self.channel_changed_signal.emit(self.channels)
 
     def __add_channel_item(self, name: str, channel_id: str):
-        """ add folder item """
+        """add folder item"""
         item = ChannelItem({'name': name, 'channel_id': channel_id}, self.view)
         item.removed.connect(self.__show_confirm_dialog)
         self.viewLayout.addWidget(item)
         self._adjustViewSize()
 
     def __show_confirm_dialog(self, item: ChannelItem):
-        """ show confirm dialog """
+        """show confirm dialog"""
         name = item.name_label.text()
         title = self.tr('Are you sure you want to delete the channel?')
-        content = self.tr("If you delete the ") + f'"{name}"' + self.tr(
-            " channel and remove it from the list, the channel will no longer appear in the list")
+        content = (
+            self.tr('If you delete the ')
+            + f'"{name}"'
+            + self.tr(' channel and remove it from the list, the channel will no longer appear in the list')
+        )
         w = Dialog(title, content, self.window())
         w.yesSignal.connect(lambda: self.__remove_folder(item))
         w.exec_()
 
     def __remove_folder(self, item: ChannelItem):
-        """ remove folder """
+        """remove folder"""
         for channel in self.channels:
             if channel['channel_id'] == item.channel['channel_id']:
                 self.channels.remove(item.channel)
@@ -492,7 +513,7 @@ class UploadCard(QFrame):
         self.vBoxLayout.setContentsMargins(10, 0, 10, 0)
         self.hBoxLayout.setSpacing(5)
         self.hBoxLayout.setContentsMargins(5, 0, 5, 0)
-        self.vBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.vBoxLayout.setAlignment(Qt.AlignmentFlag.AlignVCenter)
 
         self.vBoxLayout.addStretch(1)
         self.vBoxLayout.addSpacing(5)
@@ -503,7 +524,7 @@ class UploadCard(QFrame):
 
         self.hBoxLayout.addWidget(self.path_label, stretch=5)
         self.hBoxLayout.addSpacing(5)
-        self.hBoxLayout.addWidget(self.del_btn, stretch=1, alignment=Qt.AlignBottom)
+        self.hBoxLayout.addWidget(self.del_btn, stretch=1, alignment=Qt.AlignmentFlag.AlignBottom)
         self.del_btn.clicked.connect(self.on_del_btn_clicked)
 
         self.set_qss()

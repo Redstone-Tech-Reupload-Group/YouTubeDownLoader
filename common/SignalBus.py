@@ -2,7 +2,7 @@ from PySide6.QtCore import QObject, Signal
 
 
 class SignalBus(QObject):
-    """ Signal bus """
+    """Signal bus"""
 
     mica_enable_changed = Signal(bool)
     path2_download_signal = Signal(str)

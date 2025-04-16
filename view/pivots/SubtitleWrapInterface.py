@@ -97,7 +97,7 @@ class SubtitleWrapInterface(QFrame):
 
         self.main_layout.addSpacerItem(QSpacerItem(40, 40))
 
-        self.log_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.log_output.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.main_layout.addWidget(self.log_output)
         self.log_output.setReadOnly(True)
 
@@ -118,18 +118,18 @@ class SubtitleWrapInterface(QFrame):
         self.start_btn.clicked.connect(self.wrap_subtitle)
 
     def choose_video(self):
-        options = QFileDialog.Options()
-        options.filter = 'Video files (*.mp4)'
-        file, _ = QFileDialog.getOpenFileName(None, 'Choose Video File', cfg.get(cfg.download_folder),
-                                              'Video files (*.mp4)', options=options)
+        dialog = QFileDialog()
+        dialog.setNameFilter('Video files (*.mp4)')
+        file, _ = dialog.getOpenFileName(None, 'Choose Video File', cfg.get(cfg.download_folder), 'Video files (*.mp4)')
         self.video_input_path.setText(file)
         self.output_path.setText(file[:-4] + '_x264.mp4')
 
     def choose_subtitle(self):
-        options = QFileDialog.Options()
-        options.filter = 'Subtitle files (*.ass *.srt)'
-        file, _ = QFileDialog.getOpenFileName(None, 'Choose Subtitle File', cfg.get(cfg.download_folder),
-                                              'Subtitle files (*.ass *.srt)', options=options)
+        dialog = QFileDialog()
+        dialog.setNameFilter('Subtitle files (*.ass *.srt)')
+        file, _ = dialog.getOpenFileName(
+            None, 'Choose Subtitle File', cfg.get(cfg.download_folder), 'Subtitle files (*.ass *.srt)'
+        )
         self.sub_input_path.setText(file)
 
     def quality_btn_changed(self, is_checked: bool):
@@ -149,16 +149,35 @@ class SubtitleWrapInterface(QFrame):
 
             sub_path = self.sub_input_path.text().replace('\\', '\\\\').replace(':', '\\:')
             if cfg.get(cfg.compress_video):
-                args = ['-y', '-i', self.video_input_path.text(),
-                        '-vf', f'subtitles=\'{sub_path}\'', '-c:v', 'libx264',
-                        '-crf', '22.5', '-preset', 'ultrafast', '-movflags', '+faststart',
-                        '-c:a', 'copy', self.output_path.text()]
+                args = [
+                    '-y',
+                    '-i',
+                    self.video_input_path.text(),
+                    '-vf',
+                    f"subtitles='{sub_path}'",
+                    '-c:v',
+                    'libx264',
+                    '-crf',
+                    '22.5',
+                    '-preset',
+                    'ultrafast',
+                    '-movflags',
+                    '+faststart',
+                    '-c:a',
+                    'copy',
+                    self.output_path.text(),
+                ]
             else:
-                args = ['-y', '-i', self.video_input_path.text(),
-                        '-vf', f'subtitles=\'{sub_path}\'',
-                        self.output_path.text()]
+                args = [
+                    '-y',
+                    '-i',
+                    self.video_input_path.text(),
+                    '-vf',
+                    f"subtitles='{sub_path}'",
+                    self.output_path.text(),
+                ]
 
-            self.wrap_process.start("ffmpeg", args)
+            self.wrap_process.start('ffmpeg', args)
         else:
             self.show_finish_tooltip(self.tr('process is running, please wait until it done.'), WARNING)
 

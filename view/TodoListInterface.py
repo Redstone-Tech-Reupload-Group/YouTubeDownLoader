@@ -20,20 +20,20 @@ class TodoListInterface(QFrame):
         self.expand_layout = ExpandLayout(self.scroll_widget)
         self.video_card_view = VideoCardView('', self.scroll_widget)
 
-        self.title_label = QLabel(self.tr("TODO List"), self)
+        self.title_label = QLabel(self.tr('TODO List'), self)
 
         self.setObjectName(text)
         self.init_layout()
         self.init_widget()
 
     def init_layout(self):
-        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         if not cfg.get(cfg.api_server) == '':
             url = cfg.get(cfg.api_server)
 
             try:
-                done_response = request("GET", url)
+                done_response = request('GET', url)
 
                 json_data = done_response.json()
 
@@ -45,8 +45,9 @@ class TodoListInterface(QFrame):
                     # 将时间戳转换为指定格式
                     time_format = datetime.fromtimestamp(time_stamp / 1000).strftime('%Y年%m月%d日 %H:%M')
 
-                    video_card = TextCard(f'{todo_id} | {description}', time_format, url, f'todo{todo_id}',
-                                          self.video_card_view)
+                    video_card = TextCard(
+                        f'{todo_id} | {description}', time_format, url, f'todo{todo_id}', self.video_card_view
+                    )
                     self.video_card_view.add_video_card(video_card)
 
             except ConnectionRefusedError:
@@ -57,7 +58,7 @@ class TodoListInterface(QFrame):
         self.expand_layout.addWidget(self.video_card_view)
 
     def init_widget(self):
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setViewportMargins(0, 10, 0, 20)
         self.scroll_area.setWidget(self.scroll_widget)
         self.scroll_area.setWidgetResizable(True)

@@ -6,8 +6,16 @@ import webbrowser
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtWidgets import QFrame, QGridLayout, QLabel, QWidget, QSizePolicy, QHBoxLayout
-from qfluentwidgets import LineEdit, PushButton, ToolButton, SwitchButton, TextEdit, InfoBar, ToolTipFilter, \
-    ToolTipPosition
+from qfluentwidgets import (
+    LineEdit,
+    PushButton,
+    ToolButton,
+    SwitchButton,
+    TextEdit,
+    InfoBar,
+    ToolTipFilter,
+    ToolTipPosition,
+)
 from qfluentwidgets import FluentIcon as FIF
 from yt_dlp import YoutubeDL
 
@@ -80,12 +88,12 @@ class DownloadInterface(QFrame):
         self.main_layout.setRowStretch(8, 1)
 
         self.title_label.setMargin(10)
-        self.main_layout.addWidget(self.title_label, 0, 0, 1, 9, Qt.AlignCenter)
+        self.main_layout.addWidget(self.title_label, 0, 0, 1, 9, Qt.AlignmentFlag.AlignCenter)
 
         widget_1 = QWidget()
         layout_1 = QHBoxLayout()
         layout_1.setContentsMargins(0, 5, 0, 5)
-        self.origin_link_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.origin_link_input.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         layout_1.addWidget(self.origin_link_label, stretch=1)
         layout_1.addWidget(self.origin_link_input, stretch=6)
         widget_1.setLayout(layout_1)
@@ -95,21 +103,20 @@ class DownloadInterface(QFrame):
         layout_2 = QGridLayout()
         layout_2.setContentsMargins(0, 0, 0, 5)
         self.quality_input.setText('')
-        self.quality_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        layout_2.addWidget(self.auto_quality_label, 0, 0, Qt.AlignLeft)
-        layout_2.addWidget(self.auto_quality_btn, 0, 1, Qt.AlignLeft)
-        layout_2.addWidget(self.quality_label, 0, 3, Qt.AlignCenter)
+        self.quality_input.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        layout_2.addWidget(self.auto_quality_label, 0, 0, Qt.AlignmentFlag.AlignLeft)
+        layout_2.addWidget(self.auto_quality_btn, 0, 1, Qt.AlignmentFlag.AlignLeft)
+        layout_2.addWidget(self.quality_label, 0, 3, Qt.AlignmentFlag.AlignCenter)
         layout_2.addWidget(self.quality_input, 0, 4, 1, 2)
         layout_2.addWidget(self.get_quality_btn, 0, 6)
         widget_2.setLayout(layout_2)
         self.main_layout.addWidget(widget_2, 2, 0, 1, 9)
         self.auto_quality_btn.setChecked(cfg.get(cfg.auto_quality))
-        self.auto_quality_btn.setText(
-            self.tr('On') if self.auto_quality_btn.isChecked() else self.tr('Off'))
+        self.auto_quality_btn.setText(self.tr('On') if self.auto_quality_btn.isChecked() else self.tr('Off'))
         self.quality_input.setReadOnly(cfg.get(cfg.auto_quality))
 
-        self.main_layout.addWidget(self.get_info_btn, 3, 2, 1, 2, Qt.AlignHCenter)
-        self.main_layout.addWidget(self.download_btn, 3, 5, 1, 2, Qt.AlignHCenter)
+        self.main_layout.addWidget(self.get_info_btn, 3, 2, 1, 2, Qt.AlignmentFlag.AlignHCenter)
+        self.main_layout.addWidget(self.download_btn, 3, 5, 1, 2, Qt.AlignmentFlag.AlignHCenter)
 
         widget_3 = QWidget()
         layout_3 = QHBoxLayout()
@@ -129,9 +136,9 @@ class DownloadInterface(QFrame):
         widget_4.setLayout(layout_4)
         self.main_layout.addWidget(widget_4, 5, 0, 1, 9)
 
-        self.video_description_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.video_description_input.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.main_layout.addWidget(self.video_description_input, 6, 0, 3, 9)
-        self.video_description_input.setStyleSheet('font-size: 12px;font-family: \'Segoe UI\', \'Microsoft YaHei\';')
+        self.video_description_input.setStyleSheet("font-size: 12px;font-family: 'Segoe UI', 'Microsoft YaHei';")
 
         widget_5 = QWidget()
         layout_5 = QHBoxLayout()
@@ -158,9 +165,9 @@ class DownloadInterface(QFrame):
         self.upload_btn.installEventFilter(ToolTipFilter(self.upload_btn, 300, ToolTipPosition.TOP))
 
         self.log_output.setFixedHeight(100)
-        self.log_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.log_output.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.main_layout.addWidget(self.log_output, 10, 0, 2, 9)
-        self.log_output.setStyleSheet('font-size: 12px;font-family: \'Segoe UI\', \'Microsoft YaHei\';')
+        self.log_output.setStyleSheet("font-size: 12px;font-family: 'Segoe UI', 'Microsoft YaHei';")
         self.log_output.setReadOnly(True)
 
         self.setLayout(self.main_layout)
@@ -180,7 +187,8 @@ class DownloadInterface(QFrame):
             f'视频摘要：\r\n'
             f'原简介翻译：\r\n'
             f'存档：\r\n'
-            f'其他外链：')
+            f'其他外链：'
+        )
 
     def update_ui(self, path):
         self._path = path
@@ -237,7 +245,8 @@ class DownloadInterface(QFrame):
     def on_get_quality_btn_clicked(self):
         if self.auto_quality_btn.isChecked():
             self.show_finish_tooltip(
-                self.tr('auto quality is enabled, you can start downloading the video directly'), WARNING)
+                self.tr('auto quality is enabled, you can start downloading the video directly'), WARNING
+            )
             return
 
         if self.update_message_thread and self.update_message_thread.isRunning():
@@ -280,14 +289,23 @@ class DownloadInterface(QFrame):
             self.start_download()
 
     def start_download(self):
-        self._path = cfg.get(cfg.download_folder) + '/' + self.video_title_input.text(). \
-            replace(':', '').replace('.', '').replace('|', '').replace('\\', '').replace('/', '') \
-            .replace('?', '').replace('\"', '')
+        self._path = (
+            cfg.get(cfg.download_folder)
+            + '/'
+            + self.video_title_input.text()
+            .replace(':', '')
+            .replace('.', '')
+            .replace('|', '')
+            .replace('\\', '')
+            .replace('/', '')
+            .replace('?', '')
+            .replace('"', '')
+        )
 
         quality = self.quality_input.text()
 
         ydl_opts = {
-            "writethumbnail": True,
+            'writethumbnail': True,
             'concurrent-fragments': cfg.get(cfg.thread),
             'paths': {'home': self._path},
             'output': {'default': '%(title)s.%(ext)s'},
@@ -296,15 +314,9 @@ class DownloadInterface(QFrame):
             'subtitlesformat': 'vtt',
             'subtitleslangs': ['zh-Hans', 'en'],
             'postprocessors': [
-                {
-                    'key': 'FFmpegSubtitlesConvertor',
-                    'format': 'ass',
-                },
-                {
-                    'key': 'FFmpegThumbnailsConvertor',
-                    'format': 'jpg'
-                }
-            ]
+                {'key': 'FFmpegSubtitlesConvertor', 'format': 'ass'},
+                {'key': 'FFmpegThumbnailsConvertor', 'format': 'jpg'},
+            ],
         }
 
         if cfg.get(cfg.proxy_enable):
@@ -330,8 +342,8 @@ class DownloadInterface(QFrame):
         self._title = info_dict.get('title')
         self._description = info_dict.get('description')
 
-        if info_dict.get("upload_date") is not None:
-            self._upload_date = info_dict.get("upload_date", None)
+        if info_dict.get('upload_date') is not None:
+            self._upload_date = info_dict.get('upload_date', None)
         else:
             self._upload_date = '00000000'
 
@@ -353,7 +365,8 @@ class DownloadInterface(QFrame):
             f'视频摘要：\r\n'
             f'原简介翻译：{self._description}\r\n'
             f'存档：\r\n'
-            f'其他外链：')
+            f'其他外链：'
+        )
 
         formats = info_dict.get('formats')
         for f in formats:
@@ -395,7 +408,7 @@ class DownloadInterface(QFrame):
             print('Cancel button is pressed')
 
     def show_finish_tooltip(self, text, tool_type: int):
-        """ show restart tooltip """
+        """show restart tooltip"""
         if tool_type == SUCCESS:
             InfoBar.success('', text, parent=self.window(), duration=5000)
         elif tool_type == WARNING:
@@ -413,7 +426,7 @@ class DownloadInterface(QFrame):
 
     def on_save_btn_clicked(self):
         if self._path == '':
-            self.show_finish_tooltip(self.tr('you haven\'t downloaded any videos yet'), WARNING)
+            self.show_finish_tooltip(self.tr("you haven't downloaded any videos yet"), WARNING)
             return
 
         self.save_data()
@@ -426,15 +439,16 @@ class DownloadInterface(QFrame):
             'title': self.video_title_input.text(),
             'reprint': self.reprint_info_input.text(),
             'description': self.video_description_input.toPlainText(),
-            'uploader': self._uploader
+            'uploader': self._uploader,
         }
 
-        with open(f'{self._path}/data.json', 'w') as f:
-            json.dump(info, f)
+        with open(f'{self._path}/data.json', 'w', encoding='utf-8') as f:
+            json_str = json.dumps(info, ensure_ascii=False)
+            f.write(json_str)
 
     def on_folder_btn_clicked(self):
         if self._path == '':
-            self.show_finish_tooltip(self.tr('you haven\'t downloaded any videos yet'), WARNING)
+            self.show_finish_tooltip(self.tr("you haven't downloaded any videos yet"), WARNING)
             return
 
         if os.name == 'nt':
@@ -446,7 +460,7 @@ class DownloadInterface(QFrame):
 
     def on_play_btn_clicked(self):
         if not self._download:
-            self.show_finish_tooltip(self.tr('you haven\'t downloaded any videos yet'), WARNING)
+            self.show_finish_tooltip(self.tr("you haven't downloaded any videos yet"), WARNING)
             return
 
         files = os.listdir(self._path)
@@ -463,7 +477,7 @@ class DownloadInterface(QFrame):
 
     def on_link_btn_clicked(self):
         if self.origin_link_input.text() == '':
-            self.show_finish_tooltip(self.tr('you haven\'t entered a video link yet'), WARNING)
+            self.show_finish_tooltip(self.tr("you haven't entered a video link yet"), WARNING)
             return
 
         webbrowser.open(self.origin_link_input.text())

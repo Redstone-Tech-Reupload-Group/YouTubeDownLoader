@@ -12,7 +12,7 @@ class ToolInterface(QFrame):
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
 
-        self.title_label = QLabel(self.tr("Tools"), self)
+        self.title_label = QLabel(self.tr('Tools'), self)
 
         self.pivot = SegmentedWidget(self)
         self.stacked_widget = QStackedWidget(self)
@@ -25,7 +25,7 @@ class ToolInterface(QFrame):
         self.setObjectName(text)
 
     def init_ui(self):
-        self.title_label.setAlignment(Qt.AlignHCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
         self.add_sub_interface(self.color_space_interface, 'ColorSpaceInterface', self.tr('Convert Color Space'))
         self.add_sub_interface(self.subtitle_interface, 'SubtitleInterface', self.tr('Wrap Subtitle'))
@@ -50,9 +50,7 @@ class ToolInterface(QFrame):
         widget.setObjectName(object_name)
         self.stacked_widget.addWidget(widget)
         self.pivot.addItem(
-            routeKey=object_name,
-            text=text,
-            onClick=lambda: self.stacked_widget.setCurrentWidget(widget),
+            routeKey=object_name, text=text, onClick=lambda: self.stacked_widget.setCurrentWidget(widget)
         )
 
     def on_current_index_changed(self, index):

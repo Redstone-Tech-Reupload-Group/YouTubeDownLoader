@@ -6,13 +6,7 @@ import sys
 from PySide6.QtCore import QSize, QTranslator, Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
-from qfluentwidgets import (
-    NavigationItemPosition,
-    FluentTranslator,
-    Dialog,
-    SplashScreen,
-    FluentWindow
-)
+from qfluentwidgets import NavigationItemPosition, FluentTranslator, Dialog, SplashScreen, FluentWindow
 from qfluentwidgets import FluentIcon as FIF
 
 from Path import BASE_DIR
@@ -52,7 +46,6 @@ class Window(FluentWindow):
         self.splash_screen.finish()
 
     def init_navigation(self):
-
         self.addSubInterface(self.download_interface, FIF.EDIT, self.tr('Download'))
         self.addSubInterface(self.upload_interface, FIF.SEND, self.tr('Upload'))
         self.navigationInterface.addSeparator()
@@ -64,8 +57,9 @@ class Window(FluentWindow):
         self.addSubInterface(self.tool_interface, MyIcon.TOOL, self.tr('Tool'), pos)
 
         self.addSubInterface(self.info_interface, FIF.INFO, self.tr('About'), position=NavigationItemPosition.BOTTOM)
-        self.addSubInterface(self.setting_interface, FIF.SETTING, self.tr('Setting'),
-                             position=NavigationItemPosition.BOTTOM)
+        self.addSubInterface(
+            self.setting_interface, FIF.SETTING, self.tr('Setting'), position=NavigationItemPosition.BOTTOM
+        )
 
         self.navigationInterface.setExpandWidth(200)
 
@@ -113,8 +107,9 @@ class Window(FluentWindow):
         if cfg.get(cfg.api_token) == '':
             dialog = Dialog(
                 self.tr('No API Token!'),
-                self.tr('You haven\'t set your token yet, please go to the settings screen to set it first'),
-                self.window())
+                self.tr("You haven't set your token yet, please go to the settings screen to set it first"),
+                self.window(),
+            )
             dialog.setTitleBarVisible(False)
             if dialog.exec():
                 self.switch_to(self.setting_interface)
@@ -127,8 +122,9 @@ class Window(FluentWindow):
         if cfg.get(cfg.api_server) == '':
             dialog = Dialog(
                 self.tr('No API Server!'),
-                self.tr('You haven\'t set api server yet, please go to the settings screen to set it first'),
-                self.window())
+                self.tr("You haven't set api server yet, please go to the settings screen to set it first"),
+                self.window(),
+            )
             dialog.setTitleBarVisible(False)
             if dialog.exec():
                 self.switch_to(self.setting_interface)
@@ -204,8 +200,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(filename=LOG_PATH + '/' + LOG_NAME + '.log', level=logging.INFO)
 
-    QApplication.setHighDpiScaleFactorRoundingPolicy(
-        Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
 
     app = QApplication(sys.argv)
 

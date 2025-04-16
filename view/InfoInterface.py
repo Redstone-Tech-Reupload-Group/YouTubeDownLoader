@@ -14,7 +14,7 @@ class InfoInterface(QFrame):
         self.scroll_widget = QWidget(self)
         self.expand_layout = ExpandLayout(self.scroll_widget)
 
-        self.title_label = QLabel(self.tr("About"), self)
+        self.title_label = QLabel(self.tr('About'), self)
         self.about_text = QLabel('', self.scroll_widget)
 
         self.setObjectName(text)
@@ -22,7 +22,7 @@ class InfoInterface(QFrame):
         self.init_widget()
 
     def init_layout(self):
-        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.about_text.setFixedHeight(500)
 
@@ -31,13 +31,13 @@ class InfoInterface(QFrame):
         self.expand_layout.addWidget(self.about_text)
 
     def init_widget(self):
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setViewportMargins(0, 10, 0, 20)
         self.scroll_area.setWidget(self.scroll_widget)
         self.scroll_area.setWidgetResizable(True)
 
-        f = open(LICENCE_PATH, mode='r', encoding='utf8')
-        text = f.read()
+        with open(LICENCE_PATH, mode='r', encoding='utf8') as f:
+            text = f.read()
         self.about_text.setText(text)
 
         self.layout.addWidget(self.title_label)

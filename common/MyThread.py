@@ -25,9 +25,7 @@ class UpdateMessage(QThread):
             handler = logging.StreamHandler()
             logger.addHandler(handler)
 
-            ydl_opts = {
-                'logger': logger
-            }
+            ydl_opts = {'logger': logger}
             if cfg.get(cfg.proxy_enable):
                 ydl_opts['proxy'] = cfg.get(cfg.proxy)
                 ydl_opts['socket_timeout'] = 3000
@@ -104,7 +102,7 @@ class Upload(QThread):
         tasks = 3
         dtime = 0  # 延后时间，单位秒
         with BiliBili(video) as bili:
-            bili.login("bili.cookie", self.login_access)
+            bili.login('bili.cookie', self.login_access)
 
             for part in self.video_list:
                 video_part = bili.upload_file(part['path'], part['name'], lines=lines, tasks=tasks)

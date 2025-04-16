@@ -12,7 +12,6 @@ from common.Style import StyleSheet
 
 
 class LocalVideoInterface(QFrame):
-
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
         self.layout = QVBoxLayout(self)
@@ -21,7 +20,7 @@ class LocalVideoInterface(QFrame):
         self.expand_layout = ExpandLayout(self.scroll_widget)
         self.video_card_view = VideoCardView('', self.scroll_widget)
 
-        self.title_label = QLabel(self.tr("Download List"), self)
+        self.title_label = QLabel(self.tr('Download List'), self)
 
         self.setObjectName(text)
         self.init_layout()
@@ -29,7 +28,7 @@ class LocalVideoInterface(QFrame):
         self.connect_signal()
 
     def init_layout(self):
-        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         downloads = os.listdir(cfg.get(cfg.download_folder))
 
@@ -39,14 +38,15 @@ class LocalVideoInterface(QFrame):
             if os.path.isdir(video_path):
                 data_file = os.path.join(video_path, 'data.json')
                 if os.path.exists(data_file) and os.path.isfile(data_file):
-                    with open(data_file, 'r') as f:
+                    with open(data_file, 'r', encoding='utf-8') as f:
                         data_contents = json.loads(f.read())
                     cover_file = os.path.join(video_path, 'cover.jpg')
                     if os.path.exists(cover_file) and os.path.isfile(cover_file):
                         image = QPixmap(cover_file)
                         index += 1
-                        video_card = VideoCard(image, data_contents['title'], os.path.abspath(video_path),
-                                               f'video_card{index}', index)
+                        video_card = VideoCard(
+                            image, data_contents['title'], os.path.abspath(video_path), f'video_card{index}', index
+                        )
                         self.video_card_view.add_video_card(video_card)
                 else:
                     continue
@@ -56,7 +56,7 @@ class LocalVideoInterface(QFrame):
         self.expand_layout.addWidget(self.video_card_view)
 
     def init_widget(self):
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setViewportMargins(0, 10, 0, 20)
         self.scroll_area.setWidget(self.scroll_widget)
         self.scroll_area.setWidgetResizable(True)

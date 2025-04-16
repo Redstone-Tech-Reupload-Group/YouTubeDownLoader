@@ -6,7 +6,7 @@ from Path import BASE_DIR
 
 
 class StyleSheet(StyleSheetBase, Enum):
-    """ Style sheet  """
+    """Style sheet"""
 
     MAIN_WINDOW = 'main'
     SAMPLE = 'sample_interface'
@@ -17,11 +17,11 @@ class StyleSheet(StyleSheetBase, Enum):
     def path(self, theme=Theme.AUTO):
         theme = qconfig.theme if theme == Theme.AUTO else theme
 
-        return f"{BASE_DIR}/res/qss/{theme.value.lower()}/{self.value}.qss"
+        return f'{BASE_DIR}/res/qss/{theme.value.lower()}/{self.value}.qss'
 
 
 class MyIcon(FluentIconBase, Enum):
-    """ Custom icons """
+    """Custom icons"""
 
     KEY = 'key'
     LINK = 'link'

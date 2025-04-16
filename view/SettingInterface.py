@@ -110,7 +110,7 @@ class SettingInterface(QFrame):
         self.connect_signal()
 
     def init_layout(self):
-        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.edit_setting_group.addSettingCard(self.reprint_id_card)
         self.edit_setting_group.addSettingCard(self.proxy_enable)
         self.edit_setting_group.addSettingCard(self.proxy_card)
@@ -133,7 +133,7 @@ class SettingInterface(QFrame):
         self.expand_layout.addWidget(self.system_setting_group)
 
     def init_widget(self):
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setViewportMargins(0, 10, 0, 20)
         self.scroll_area.setWidget(self.scroll_widget)
         self.scroll_area.setWidgetResizable(True)

@@ -70,7 +70,7 @@ class VideoTransInterface(QFrame):
 
         self.main_layout.addSpacerItem(QSpacerItem(40, 40))
 
-        self.log_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.log_output.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.main_layout.addWidget(self.log_output)
         self.log_output.setReadOnly(True)
 
@@ -87,10 +87,9 @@ class VideoTransInterface(QFrame):
         self.start_btn.clicked.connect(self.convert_video)
 
     def on_input_btn_clicked(self):
-        options = QFileDialog.Options()
-        options.filter = 'VIDEO files (*.mp4)'
-        file, _ = QFileDialog.getOpenFileName(None, 'Choose Video File', cfg.get(cfg.download_folder),
-                                              'Video files (*.mp4)', options=options)
+        dialog = QFileDialog()
+        dialog.setNameFilter('VIDEO files (*.mp4)')
+        file, _ = dialog.getOpenFileName(None, 'Choose Video File', cfg.get(cfg.download_folder), 'Video files (*.mp4)')
         self.input_path.setText(file)
         self.output_path.setText(file[:-4] + '_yuv420p.mp4')
 
@@ -104,10 +103,9 @@ class VideoTransInterface(QFrame):
             self.convert_process.readyReadStandardOutput.connect(self.handle_stdout)
             self.convert_process.readyReadStandardError.connect(self.handle_stderr)
             self.convert_process.finished.connect(self.convert_finished)
-            self.convert_process.start("ffmpeg", ['-y', '-i',
-                                                  self.input_path.text(),
-                                                  '-vf', 'format=yuv420p',
-                                                  self.output_path.text()])
+            self.convert_process.start(
+                'ffmpeg', ['-y', '-i', self.input_path.text(), '-vf', 'format=yuv420p', self.output_path.text()]
+            )
         else:
             self.show_finish_tooltip(self.tr('process is running, please wait until it done.'), WARNING)
 

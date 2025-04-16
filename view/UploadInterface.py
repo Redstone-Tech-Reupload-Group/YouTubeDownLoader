@@ -4,8 +4,7 @@ import re
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QFrame, QLabel, QVBoxLayout, QWidget, QSizePolicy, QHBoxLayout, QFileDialog
-from qfluentwidgets import TextEdit, ScrollArea, ExpandLayout, LineEdit, ToolButton, PrimaryPushButton, \
-    InfoBar
+from qfluentwidgets import TextEdit, ScrollArea, ExpandLayout, LineEdit, ToolButton, PrimaryPushButton, InfoBar
 from qfluentwidgets import FluentIcon as FIF
 
 from common.Config import cfg, SUCCESS, WARNING
@@ -27,7 +26,7 @@ class UploadInterface(QFrame):
         self.scroll_widget = QWidget(self)
         self.expand_layout = ExpandLayout(self.scroll_widget)
 
-        self.title_label = QLabel(self.tr("Upload"), self)
+        self.title_label = QLabel(self.tr('Upload'), self)
 
         self.video_title_label = QLabel(self.tr('Video Title'), self.scroll_widget)
         self.video_title_input = LineEdit(self.scroll_widget)
@@ -64,7 +63,7 @@ class UploadInterface(QFrame):
         self.connect_signal()
 
     def init_widget(self):
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setViewportMargins(0, 10, 0, 20)
         self.scroll_area.setWidget(self.scroll_widget)
         self.scroll_area.setWidgetResizable(True)
@@ -93,9 +92,9 @@ class UploadInterface(QFrame):
         layout_3 = QHBoxLayout()
         layout_3.setContentsMargins(5, 0, 0, 0)
         self.video_label.setFixedWidth(85)
-        layout_3.addWidget(self.video_label, stretch=1, alignment=Qt.AlignTop)
-        layout_3.addWidget(self.video_card_view, stretch=6, alignment=Qt.AlignTop)
-        self.video_card_layout.addWidget(self.add_video_btn, alignment=Qt.AlignRight)
+        layout_3.addWidget(self.video_label, stretch=1, alignment=Qt.AlignmentFlag.AlignTop)
+        layout_3.addWidget(self.video_card_view, stretch=6, alignment=Qt.AlignmentFlag.AlignTop)
+        self.video_card_layout.addWidget(self.add_video_btn, alignment=Qt.AlignmentFlag.AlignRight)
         self.widget_3.setLayout(layout_3)
         self.widget_3.setFixedHeight(35)
         self.expand_layout.addWidget(self.widget_3)
@@ -124,14 +123,14 @@ class UploadInterface(QFrame):
         layout_6 = QHBoxLayout()
         layout_6.setContentsMargins(5, 0, 0, 0)
         self.video_description_label.setFixedWidth(85)
-        layout_6.addWidget(self.video_description_label, stretch=1, alignment=Qt.AlignTop)
-        layout_6.addWidget(self.video_description_input, stretch=6, alignment=Qt.AlignTop)
-        self.video_description_input.setStyleSheet('font-size: 12px;font-family: \'Segoe UI\', \'Microsoft YaHei\';')
+        layout_6.addWidget(self.video_description_label, stretch=1, alignment=Qt.AlignmentFlag.AlignTop)
+        layout_6.addWidget(self.video_description_input, stretch=6, alignment=Qt.AlignmentFlag.AlignTop)
+        self.video_description_input.setStyleSheet("font-size: 12px;font-family: 'Segoe UI', 'Microsoft YaHei';")
         self.video_description_input.setFixedHeight(240)
         widget_6.setLayout(layout_6)
         widget_6.setFixedHeight(250)
         self.expand_layout.addWidget(widget_6)
-        
+
         widget_7 = QWidget(self.scroll_widget)
         layout_7 = QHBoxLayout()
         layout_7.setContentsMargins(5, 0, 0, 0)
@@ -145,18 +144,18 @@ class UploadInterface(QFrame):
         widget_8 = QWidget(self.scroll_widget)
         layout_8 = QHBoxLayout()
         layout_8.setContentsMargins(5, 0, 0, 0)
-        layout_8.addWidget(self.upload_btn, alignment=Qt.AlignCenter)
+        layout_8.addWidget(self.upload_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         widget_8.setLayout(layout_8)
         widget_8.setFixedHeight(35)
         self.expand_layout.addWidget(widget_8)
 
         self.log_output.setFixedHeight(100)
-        self.log_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.log_output.setStyleSheet('font-size: 12px;font-family: \'Segoe UI\', \'Microsoft YaHei\';')
+        self.log_output.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.log_output.setStyleSheet("font-size: 12px;font-family: 'Segoe UI', 'Microsoft YaHei';")
         self.log_output.setReadOnly(True)
 
     def init_layout(self):
-        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.video_card_view.setLayout(self.video_card_layout)
         self.video_card_layout.setSpacing(5)
@@ -189,12 +188,8 @@ class UploadInterface(QFrame):
 
     def add_video(self, path):
         name = os.path.splitext(os.path.split(path)[1])[0]
-        route_key = re.findall(r'\[(.*?)\]', name)[-1]
-        video = {
-            'name': name,
-            'route_key': route_key,
-            'path': path
-        }
+        route_key = re.findall(r'\[(.*?)]', name)[-1]
+        video = {'name': name, 'route_key': route_key, 'path': path}
         if video not in self._videos:
             self._videos.append(video)
 
@@ -208,7 +203,7 @@ class UploadInterface(QFrame):
             return
 
     def del_video(self, route_key):
-        card = self.video_card_view.findChild(UploadCard, route_key, options=Qt.FindDirectChildrenOnly)
+        card = self.video_card_view.findChild(UploadCard, route_key, options=Qt.FindChildOption.FindDirectChildrenOnly)
         if card is not None:
             card.deleteLater()
             self._videos = [video for video in self._videos if video['route_key'] != route_key]
@@ -248,17 +243,19 @@ class UploadInterface(QFrame):
         signal_bus.log_signal.connect(self.log_update)
 
     def on_cover_path_btn_clicked(self):
-        options = QFileDialog.Options()
-        options.filter = "JPEG files (*.jpg)"
-        file_name, _ = QFileDialog.getOpenFileName(None, "Choose Image File", cfg.get(cfg.download_folder),
-                                                   "Image files (*.jpg *.png *.bmp)", options=options)
+        options = QFileDialog().options()
+        options.filter = 'JPEG files (*.jpg)'
+        file_name, _ = QFileDialog.getOpenFileName(
+            None, 'Choose Image File', cfg.get(cfg.download_folder), 'Image files (*.jpg *.png *.bmp)', options=options
+        )
         self.cover_path_input.setText(file_name)
 
     def on_add_video_btn_clicked(self):
-        options = QFileDialog.Options()
-        options.filter = "MP4 files (*.mp4)"
-        file_name, _ = QFileDialog.getOpenFileName(None, "Choose Image File", cfg.get(cfg.download_folder),
-                                                   "Video files (*.mp4)", options=options)
+        dialog = QFileDialog()
+        dialog.setNameFilter(self.tr('MP4 files (*.mp4)'))
+        file_name, _ = dialog.getOpenFileName(
+            None, 'Choose Image File', cfg.get(cfg.download_folder), 'Video files (*.mp4)'
+        )
 
         self.add_video(file_name)
 
@@ -301,24 +298,22 @@ class UploadInterface(QFrame):
                 'SESSDATA': sessdata,
                 'bili_jct': bili_jct,
                 'DedeUserID__ckMd5': dedeuserid_ckmd5,
-                'DedeUserID': dedeuserid
+                'DedeUserID': dedeuserid,
             },
-            'access_token': access_token
+            'access_token': access_token,
         }
 
         if len(self._videos) == 0:
             self.show_finish_tooltip(self.tr('no videos, plead add video first!'), WARNING)
         video_list = []
         for video_info in self._videos:
-            card = self.video_card_view.findChild(UploadCard, video_info['route_key'],
-                                                  options=Qt.FindDirectChildrenOnly)
+            card = self.video_card_view.findChild(
+                UploadCard, video_info['route_key'], options=Qt.FindChildOption.FindDirectChildrenOnly
+            )
             title = 'part'
             if card is not None:
                 title = card.title_input.text()
-                part_info = {
-                    'name': title,
-                    'path': video_info['path']
-                }
+                part_info = {'name': title, 'path': video_info['path']}
                 video_list.append(part_info)
 
             if self.upload_thread and self.upload_thread.isRunning():
@@ -330,7 +325,7 @@ class UploadInterface(QFrame):
                 'source': self.reprint_info_input.text(),
                 'tag': self.tag_input.text().split(','),
                 'dynamic': self.dynamic_input.text(),
-                'cover_path': self.cover_path_input.text()
+                'cover_path': self.cover_path_input.text(),
             }
 
             self.upload_thread = Upload(login_access, info, video_list)
