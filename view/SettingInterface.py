@@ -1,7 +1,19 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame, QWidget, QVBoxLayout, QLabel, QFileDialog
-from qfluentwidgets import ScrollArea, ExpandLayout, SettingCardGroup, PushSettingCard, SwitchSettingCard, \
-    ComboBoxSettingCard, InfoBar, CustomColorSettingCard, setThemeColor, OptionsSettingCard, setTheme, Theme
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame, QWidget, QVBoxLayout, QLabel, QFileDialog
+from qfluentwidgets import (
+    ScrollArea,
+    ExpandLayout,
+    SettingCardGroup,
+    PushSettingCard,
+    SwitchSettingCard,
+    ComboBoxSettingCard,
+    InfoBar,
+    CustomColorSettingCard,
+    setThemeColor,
+    OptionsSettingCard,
+    setTheme,
+    Theme,
+)
 from qfluentwidgets import FluentIcon as FIF
 
 from common.Config import cfg
@@ -11,7 +23,6 @@ from common.Style import StyleSheet, MyIcon
 
 
 class SettingInterface(QFrame):
-
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
         self.layout = QVBoxLayout(self)
@@ -19,96 +30,70 @@ class SettingInterface(QFrame):
         self.scroll_widget = QWidget(self)
         self.expand_layout = ExpandLayout(self.scroll_widget)
 
-        self.title_label = QLabel(self.tr("Settings"), self)
+        self.title_label = QLabel(self.tr('Settings'), self)
 
-        self.edit_setting_group = SettingCardGroup(
-            self.tr('Download Setting'), self.scroll_widget
-        )
+        self.edit_setting_group = SettingCardGroup(self.tr('Download Setting'), self.scroll_widget)
         self.reprint_id_card = PushSettingCard(
-            self.tr('Edit'),
-            FIF.DOWNLOAD,
-            self.tr('Reprinter ID'),
-            cfg.get(cfg.reprint_id),
-            self.edit_setting_group
+            self.tr('Edit'), FIF.DOWNLOAD, self.tr('Reprinter ID'), cfg.get(cfg.reprint_id), self.edit_setting_group
         )
         self.proxy_enable = SwitchSettingCard(
             FIF.GLOBE,
-            self.tr("Enable Proxy"),
-            self.tr("Whether to enable web proxy"),
+            self.tr('Enable Proxy'),
+            self.tr('Whether to enable web proxy'),
             configItem=cfg.proxy_enable,
-            parent=self.edit_setting_group
+            parent=self.edit_setting_group,
         )
         self.proxy_card = PushSettingCard(
-            self.tr('Edit'),
-            FIF.GLOBE,
-            self.tr('Proxy Setting'),
-            cfg.get(cfg.proxy),
-            self.edit_setting_group
+            self.tr('Edit'), FIF.GLOBE, self.tr('Proxy Setting'), cfg.get(cfg.proxy), self.edit_setting_group
         )
         self.thread_card = RangeSettingCard(
-            cfg.thread,
-            MyIcon.NUMBER,
-            self.tr('Number of threads'),
-            parent=self.edit_setting_group
+            cfg.thread, MyIcon.NUMBER, self.tr('Number of threads'), parent=self.edit_setting_group
         )
         self.download_folder_card = PushSettingCard(
             self.tr('Choose folder'),
             FIF.FOLDER_ADD,
-            self.tr("Download directory"),
+            self.tr('Download directory'),
             cfg.get(cfg.download_folder),
-            self.edit_setting_group
+            self.edit_setting_group,
         )
 
-        self.advanced_setting_group = SettingCardGroup(
-            self.tr('Advanced setting'), self.scroll_widget
-        )
+        self.advanced_setting_group = SettingCardGroup(self.tr('Advanced setting'), self.scroll_widget)
         self.google_api_card = PushSettingCard(
             self.tr('Edit'),
             MyIcon.KEY,
             self.tr('Google Api Token'),
             str_encryption(cfg.get(cfg.api_token)),
-            self.advanced_setting_group
+            self.advanced_setting_group,
         )
         self.subscribe_channel_card = DistListSettingCard(
-            cfg.subscribe_channels,
-            self.tr("Subscribe Channels"),
-            parent=self.advanced_setting_group
+            cfg.subscribe_channels, self.tr('Subscribe Channels'), parent=self.advanced_setting_group
         )
         self.api_server_card = PushSettingCard(
-            self.tr('Edit'),
-            MyIcon.SERVER,
-            self.tr('Api Server'),
-            cfg.get(cfg.api_server),
-            self.advanced_setting_group
+            self.tr('Edit'), MyIcon.SERVER, self.tr('Api Server'), cfg.get(cfg.api_server), self.advanced_setting_group
         )
 
-        self.system_setting_group = SettingCardGroup(
-            self.tr('System Setting'), self.scroll_widget
-        )
+        self.system_setting_group = SettingCardGroup(self.tr('System Setting'), self.scroll_widget)
         self.theme_card = OptionsSettingCard(
             cfg.themeMode,
             FIF.BRUSH,
             self.tr('Application theme'),
-            self.tr("Change the appearance of your application"),
-            texts=[
-                self.tr('Light'), self.tr('Dark'),
-                self.tr('Use system setting')
-            ],
-            parent=self.system_setting_group
+            self.tr('Change the appearance of your application'),
+            texts=[self.tr('Light'), self.tr('Dark'), self.tr('Use system setting')],
+            parent=self.system_setting_group,
         )
         self.theme_color_card = CustomColorSettingCard(
             cfg.themeColor,
             FIF.PALETTE,
             self.tr('Theme color'),
             self.tr('Change the theme color of you application'),
-            self.system_setting_group
+            self.system_setting_group,
         )
         self.mica_card = SwitchSettingCard(
             FIF.TRANSPARENT,
             self.tr('Mica effect'),
             self.tr('Apply semi transparent to windows and surfaces'),
             cfg.mica_enabled,
-            self.system_setting_group
+            self.system_setting_group,
         )
         self.language_card = ComboBoxSettingCard(
             cfg.language,
@@ -116,7 +101,7 @@ class SettingInterface(QFrame):
             self.tr('Language'),
             self.tr('Set your preferred language for UI'),
             texts=['简体中文', 'English', self.tr('Use system setting')],
-            parent=self.system_setting_group
+            parent=self.system_setting_group,
         )
 
         self.setObjectName(text)
@@ -168,36 +153,22 @@ class SettingInterface(QFrame):
         cfg.appRestartSig.connect(self.show_restart_tooltip)
         cfg.themeChanged.connect(self.on_theme_changed)
 
-        self.reprint_id_card.clicked.connect(
-            self.on_reprint_id_card_clicked
-        )
-        self.download_folder_card.clicked.connect(
-            self.on_download_folder_card_clicked
-        )
-        self.proxy_card.clicked.connect(
-            self.on_proxy_card_clicked
-        )
+        self.reprint_id_card.clicked.connect(self.on_reprint_id_card_clicked)
+        self.download_folder_card.clicked.connect(self.on_download_folder_card_clicked)
+        self.proxy_card.clicked.connect(self.on_proxy_card_clicked)
 
-        self.google_api_card.clicked.connect(
-            self.on_google_api_card_clicked
-        )
-        self.api_server_card.clicked.connect(
-            self.on_api_server_card_clicked
-        )
+        self.google_api_card.clicked.connect(self.on_google_api_card_clicked)
+        self.api_server_card.clicked.connect(self.on_api_server_card_clicked)
 
         self.theme_color_card.colorChanged.connect(setThemeColor)
         self.mica_card.checkedChanged.connect(signal_bus.mica_enable_changed)
 
     def show_restart_tooltip(self):
-        """ show restart tooltip """
-        InfoBar.warning(
-            '',
-            self.tr('Configuration takes effect after restart'),
-            parent=self.window()
-        )
+        """show restart tooltip"""
+        InfoBar.warning('', self.tr('Configuration takes effect after restart'), parent=self.window())
 
     def on_theme_changed(self, theme: Theme):
-        """ theme changed slot """
+        """theme changed slot"""
         setTheme(theme)
 
         self.set_qss()
@@ -222,9 +193,7 @@ class SettingInterface(QFrame):
 
     def on_google_api_card_clicked(self):
         w = TextDialog(
-            self.tr('API Token Setting'),
-            self.tr('set your google develop token:'),
-            cfg.get(cfg.api_token), self
+            self.tr('API Token Setting'), self.tr('set your google develop token:'), cfg.get(cfg.api_token), self
         )
         w.setTitleBarVisible(False)
         if w.exec():
@@ -243,8 +212,7 @@ class SettingInterface(QFrame):
             print('Cancel button is pressed')
 
     def on_download_folder_card_clicked(self):
-        folder = QFileDialog.getExistingDirectory(
-            self, self.tr("Choose folder"), "./")
+        folder = QFileDialog.getExistingDirectory(self, self.tr('Choose folder'), './')
         if not folder or cfg.get(cfg.download_folder) == folder:
             return
 
@@ -257,4 +225,4 @@ def str_encryption(text: str):
     if len(text) == 0:
         return ''
     else:
-        return text[:3] + "***" + text[-3:]
+        return text[:3] + '***' + text[-3:]

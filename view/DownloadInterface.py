@@ -3,9 +3,9 @@ import os
 import subprocess
 import webbrowser
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QGuiApplication
-from PyQt5.QtWidgets import QFrame, QGridLayout, QLabel, QWidget, QSizePolicy, QHBoxLayout
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtWidgets import QFrame, QGridLayout, QLabel, QWidget, QSizePolicy, QHBoxLayout
 from qfluentwidgets import LineEdit, PushButton, ToolButton, SwitchButton, TextEdit, InfoBar, ToolTipFilter, \
     ToolTipPosition
 from qfluentwidgets import FluentIcon as FIF
@@ -330,7 +330,7 @@ class DownloadInterface(QFrame):
         self._title = info_dict.get('title')
         self._description = info_dict.get('description')
 
-        if not (info_dict.get("upload_date") is None):
+        if info_dict.get("upload_date") is not None:
             self._upload_date = info_dict.get("upload_date", None)
         else:
             self._upload_date = '00000000'

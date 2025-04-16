@@ -1,6 +1,6 @@
-from PyQt5.QtCore import Qt
+from PySide6.QtCore import Qt
 
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel, QStackedWidget
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel, QStackedWidget
 from qfluentwidgets import SegmentedWidget
 
 from common.Style import StyleSheet

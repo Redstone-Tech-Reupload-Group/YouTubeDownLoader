@@ -1,9 +1,9 @@
 import json
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
 from qfluentwidgets import ScrollArea, ExpandLayout
 
 from common.Config import cfg

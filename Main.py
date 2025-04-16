@@ -3,17 +3,22 @@ import logging
 import os
 import sys
 
-from PyQt5.QtCore import Qt, QTranslator, QSize
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
-from qfluentwidgets import NavigationItemPosition, setTheme, Theme, FluentTranslator, Dialog, SplashScreen, \
-    FluentWindow, MSFluentWindow
+from PySide6.QtCore import QSize, QTranslator, Qt
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QApplication
+from qfluentwidgets import (
+    NavigationItemPosition,
+    FluentTranslator,
+    Dialog,
+    SplashScreen,
+    FluentWindow
+)
 from qfluentwidgets import FluentIcon as FIF
 
 from Path import BASE_DIR
 from common.Config import cfg, VERSION, LOG_PATH, LOG_NAME
 from common.SignalBus import signal_bus
-from common.Style import StyleSheet, MyIcon
+from common.Style import MyIcon
 from view.DownloadInterface import DownloadInterface
 from view.InfoInterface import InfoInterface
 from view.LocalVideoInterface import LocalVideoInterface
@@ -75,7 +80,7 @@ class Window(FluentWindow):
         self.splash_screen.setIconSize(QSize(106, 106))
         self.splash_screen.raise_()
 
-        desktop = QApplication.desktop().availableGeometry()
+        desktop = QApplication.primaryScreen().availableGeometry()
         _w, _h = desktop.width(), desktop.height()
         self.move(_w // 2 - self.width() // 2, _h // 2 - self.height() // 2)
 
@@ -201,11 +206,8 @@ if __name__ == '__main__':
 
     QApplication.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
     app = QApplication(sys.argv)
-    app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
     # internationalization
     locale = cfg.get(cfg.language).value
@@ -221,4 +223,4 @@ if __name__ == '__main__':
 
     hideConsole()
 
-    app.exec_()
+    app.exec()

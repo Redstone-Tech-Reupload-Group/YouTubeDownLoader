@@ -2,13 +2,13 @@ import sys
 import time
 from enum import Enum
 
-from PyQt5.QtCore import QLocale
+from PySide6.QtCore import QLocale
 from qfluentwidgets import qconfig, OptionsConfigItem, OptionsValidator, QConfig, ConfigItem, \
     RangeConfigItem, RangeValidator, BoolValidator, ConfigSerializer, FolderValidator, Theme
 
 from Path import BASE_DIR
 
-VERSION = '6.4.1'
+VERSION = '7.0.0'
 LICENCE_PATH = f'{BASE_DIR}/res/LICENCE.html'
 
 LOG_PATH = 'log'

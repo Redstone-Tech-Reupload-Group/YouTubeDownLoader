@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply, QNetworkProxy
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QPixmap
+from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply, QNetworkProxy
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
 from googleapiclient.discovery import build
 from httplib2 import ProxyInfo, socks, Http
 from qfluentwidgets import ScrollArea, ExpandLayout

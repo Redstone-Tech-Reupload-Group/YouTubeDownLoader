@@ -1,9 +1,9 @@
 from typing import Union
 
 import qfluentwidgets
-from PyQt5.QtCore import pyqtSignal, Qt, QRectF
-from PyQt5.QtGui import QIcon, QPixmap, QPainter, QDragEnterEvent
-from PyQt5.QtWidgets import QLabel, QWidget, QVBoxLayout, QGridLayout, QTableWidgetItem, QFrame, \
+from PySide6.QtCore import Signal, Qt, QRectF
+from PySide6.QtGui import QIcon, QPixmap, QPainter, QDragEnterEvent
+from PySide6.QtWidgets import QLabel, QWidget, QVBoxLayout, QGridLayout, QTableWidgetItem, QFrame, \
     QHBoxLayout, QToolButton
 from qfluentwidgets import SettingCard, FluentIconBase, Slider, qconfig, LineEdit, TableWidget, \
     TextWrap, PixmapLabel, ExpandLayout, ExpandSettingCard, ConfigItem, PushButton, drawIcon
@@ -61,7 +61,7 @@ class CustomTitleBar(TitleBar):
 class RangeSettingCard(SettingCard):
     """ Setting card with a slider """
 
-    valueChanged = pyqtSignal(int)
+    valueChanged = Signal(int)
 
     def __init__(self, configItem, icon: Union[str, QIcon, FluentIconBase], title, content=None, parent=None):
         """
@@ -117,8 +117,8 @@ class RangeSettingCard(SettingCard):
 class TextDialog(Dialog):
     """ Dialog box """
 
-    yesSignal = pyqtSignal()
-    cancelSignal = pyqtSignal()
+    yesSignal = Signal()
+    cancelSignal = Signal()
 
     def __init__(self, title: str, content: str, default: str, parent=None):
         super().__init__(title, content, parent=parent)
@@ -141,8 +141,8 @@ class TextDialog(Dialog):
 class TableDialog(Dialog):
     """ Dialog box """
 
-    yesSignal = pyqtSignal()
-    cancelSignal = pyqtSignal()
+    yesSignal = Signal()
+    cancelSignal = Signal()
     audio_code = ''
     video_code = ''
 
@@ -312,8 +312,8 @@ class VideoCardView(QWidget):
 class ChannelDialog(Dialog):
     """ Dialog box """
 
-    yesSignal = pyqtSignal()
-    cancelSignal = pyqtSignal()
+    yesSignal = Signal()
+    cancelSignal = Signal()
 
     def __init__(self, parent=None):
         super().__init__('', '', parent=parent)
@@ -381,7 +381,7 @@ class ToolButton(QToolButton):
 class ChannelItem(QWidget):
     """ Folder item """
 
-    removed = pyqtSignal(QWidget)
+    removed = Signal(QWidget)
 
     def __init__(self, channel: dict, parent=None):
         super().__init__(parent=parent)
@@ -403,7 +403,7 @@ class ChannelItem(QWidget):
 
 
 class DistListSettingCard(ExpandSettingCard):
-    channel_changed_signal = pyqtSignal(list)
+    channel_changed_signal = Signal(list)
 
     def __init__(self, config_item: ConfigItem, title: str, content: str = None, parent=None):
         super().__init__(MyIcon.LINK.icon(), title, content, parent)
@@ -471,7 +471,7 @@ class DistListSettingCard(ExpandSettingCard):
 
 
 class UploadCard(QFrame):
-    del_signal = pyqtSignal(str)
+    del_signal = Signal(str)
 
     def __init__(self, title: str, path: str, parent=None):
         super().__init__(parent=parent)

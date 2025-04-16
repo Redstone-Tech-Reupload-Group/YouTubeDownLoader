@@ -1,7 +1,7 @@
 import logging
 from urllib.error import URLError
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 from yt_dlp import YoutubeDL, DownloadError
 from yt_dlp.extractor.youtube import YoutubeIE
 
@@ -10,10 +10,10 @@ from common.Uploader import BiliBili, Data
 
 
 class UpdateMessage(QThread):
-    log_signal = pyqtSignal(dict)
-    result_signal = pyqtSignal(dict)
-    finish_signal = pyqtSignal()
-    error_signal = pyqtSignal()
+    log_signal = Signal(dict)
+    result_signal = Signal(dict)
+    finish_signal = Signal()
+    error_signal = Signal()
 
     def __init__(self, url):
         super().__init__()
@@ -53,9 +53,9 @@ class UpdateMessage(QThread):
 
 
 class Download(QThread):
-    log_signal = pyqtSignal(dict)
-    finish_signal = pyqtSignal()
-    error_signal = pyqtSignal()
+    log_signal = Signal(dict)
+    finish_signal = Signal()
+    error_signal = Signal()
 
     def __init__(self, url, ydl_opts):
         super().__init__()
@@ -84,7 +84,7 @@ class Download(QThread):
 
 
 class Upload(QThread):
-    finish_signal = pyqtSignal()
+    finish_signal = Signal()
 
     def __init__(self, login_access, info: dict, video_list: list):
         super().__init__()

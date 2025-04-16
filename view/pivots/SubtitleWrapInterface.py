@@ -1,5 +1,5 @@
-from PyQt5.QtCore import QProcess
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
+from PySide6.QtCore import QProcess
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
 from qfluentwidgets import ToolButton, LineEdit, PrimaryPushButton, TextEdit, InfoBar, SwitchButton
 
 from qfluentwidgets import FluentIcon as FIF

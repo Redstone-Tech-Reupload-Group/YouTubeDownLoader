@@ -1,8 +1,8 @@
 import logging
 from datetime import datetime
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget, QLabel
 from qfluentwidgets import ScrollArea, ExpandLayout
 from requests import request
 

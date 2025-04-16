@@ -1,0 +1,30 @@
+[project]
+name = "youtubedownloader"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohttp>=3.11.13",
+    "google-api-python-client>=2.162.0",
+    "pyside6-fluent-widgets>=1.7.5",
+    "pysocks>=1.7.1",
+    "yt-dlp>=2025.2.19",
+]
+
+
+[tool.ruff]
+# Allow lines to be as long as 120.
+line-length = 120
+
+[tool.ruff.format]
+# 使用单引号
+quote-style = "single"
+# 启用docstring代码片段格式化
+docstring-code-format = true
+skip-magic-trailing-comma = true
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.12.0",
+]

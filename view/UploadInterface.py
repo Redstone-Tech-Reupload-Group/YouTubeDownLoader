@@ -2,8 +2,8 @@ import json
 import os
 import re
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame, QLabel, QVBoxLayout, QWidget, QSizePolicy, QHBoxLayout, QFileDialog
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame, QLabel, QVBoxLayout, QWidget, QSizePolicy, QHBoxLayout, QFileDialog
 from qfluentwidgets import TextEdit, ScrollArea, ExpandLayout, LineEdit, ToolButton, PrimaryPushButton, \
     InfoBar
 from qfluentwidgets import FluentIcon as FIF
