@@ -18,7 +18,7 @@ from qfluentwidgets import (
 
 from Path import BASE_DIR
 
-VERSION = '7.0.1'
+VERSION = '7.0.2'
 LICENCE_PATH = f'{BASE_DIR}/res/LICENCE.html'
 
 LOG_PATH = 'log'

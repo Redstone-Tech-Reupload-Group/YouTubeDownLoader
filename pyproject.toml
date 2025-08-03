@@ -1,6 +1,6 @@
 [project]
 name = "youtubedownloader"
-version = "7.0.1"
+version = "7.0.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -9,7 +9,7 @@ dependencies = [
     "google-api-python-client>=2.162.0",
     "pyside6-fluent-widgets>=1.7.7",
     "pysocks>=1.7.1",
-    "yt-dlp==2025.3.31",
+    "yt-dlp[curl-cffi,default]==2025.7.21",
 ]
 
 
@@ -26,5 +26,5 @@ skip-magic-trailing-comma = true
 
 [dependency-groups]
 dev = [
-    "pyinstaller>=6.12.0",
+    "pyinstaller>=6.14.2",
 ]
