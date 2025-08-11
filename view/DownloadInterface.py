@@ -311,10 +311,10 @@ class DownloadInterface(QFrame):
             'output': {'default': '%(title)s.%(ext)s'},
             'writesubtitles': True,
             'writeautomaticsub': True,
-            'subtitlesformat': 'vtt',
-            'subtitleslangs': ['zh-Hans', 'en'],
+            'subtitlesformat': 'json3',
+            'subtitleslangs': ['en'],
             'postprocessors': [
-                {'key': 'FFmpegSubtitlesConvertor', 'format': 'ass'},
+                # {'key': 'FFmpegSubtitlesConvertor', 'format': 'srt'},
                 {'key': 'FFmpegThumbnailsConvertor', 'format': 'jpg'},
             ],
         }
