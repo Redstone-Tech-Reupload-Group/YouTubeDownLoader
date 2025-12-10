@@ -6,6 +6,7 @@ import webbrowser
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtWidgets import QFrame, QGridLayout, QLabel, QWidget, QSizePolicy, QHBoxLayout
+from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import (
     LineEdit,
     PushButton,
@@ -16,7 +17,6 @@ from qfluentwidgets import (
     ToolTipFilter,
     ToolTipPosition,
 )
-from qfluentwidgets import FluentIcon as FIF
 from yt_dlp import YoutubeDL
 
 from common.Config import cfg, SUCCESS, WARNING
@@ -181,19 +181,21 @@ class DownloadInterface(QFrame):
         self.video_title_input.setText('【MC】【】')
         self.reprint_info_input.setText('转自 有能力请支持原作者')
         self.video_description_input.setText(
-            f'作者：\r\n'
-            f'发布时间：\r\n'
-            f'搬运：{cfg.get(cfg.reprint_id)}\r\n'
+            f'作者：  发布时间：  搬运：{cfg.get(cfg.reprint_id)}\r\n'
+            f'\r\n'
             f'视频摘要：\r\n'
+            f'\r\n'
             f'原简介翻译：\r\n'
+            f'\r\n'
             f'存档：\r\n'
+            f'存档原链接：\r\n'
             f'其他外链：'
         )
 
     def update_ui(self, path):
         self._path = path
         data_file = os.path.join(path, 'data.json')
-        with open(data_file, 'r') as f:
+        with open(data_file, 'r', encoding='utf-8') as f:
             data_contents = json.loads(f.read())
             self.origin_link_input.setText(data_contents['link'])
             self.video_title_input.setText(data_contents['title'])
@@ -290,16 +292,16 @@ class DownloadInterface(QFrame):
 
     def start_download(self):
         self._path = (
-            cfg.get(cfg.download_folder)
-            + '/'
-            + self.video_title_input.text()
-            .replace(':', '')
-            .replace('.', '')
-            .replace('|', '')
-            .replace('\\', '')
-            .replace('/', '')
-            .replace('?', '')
-            .replace('"', '')
+                cfg.get(cfg.download_folder)
+                + '/'
+                + self.video_title_input.text()
+                .replace(':', '')
+                .replace('.', '')
+                .replace('|', '')
+                .replace('\\', '')
+                .replace('/', '')
+                .replace('?', '')
+                .replace('"', '')
         )
 
         quality = self.quality_input.text()
@@ -315,7 +317,7 @@ class DownloadInterface(QFrame):
             'subtitleslangs': ['en'],
             'postprocessors': [
                 # {'key': 'FFmpegSubtitlesConvertor', 'format': 'srt'},
-                {'key': 'FFmpegThumbnailsConvertor', 'format': 'jpg'},
+                {'key': 'FFmpegThumbnailsConvertor', 'format': 'jpg'}
             ],
         }
 
@@ -359,12 +361,15 @@ class DownloadInterface(QFrame):
         self.video_title_input.setText(f'【MC】{self._title}【{self._uploader}】')
         self.reprint_info_input.setText(f'转自{self.origin_link_input.text()} 有能力请支持原作者')
         self.video_description_input.setText(
-            f'作者：{self._uploader}\r\n'
-            f'发布时间：{date}\r\n'
-            f'搬运：{cfg.get(cfg.reprint_id)}\r\n'
+            f'作者：{self._uploader} 发布时间：{date} 搬运：{cfg.get(cfg.reprint_id)}\r\n'
+            f'\r\n'
             f'视频摘要：\r\n'
-            f'原简介翻译：{self._description}\r\n'
+            f'\r\n'
+            f'原简介翻译：\r\n'
+            f'{self._description}\r\n'
+            f'\r\n'
             f'存档：\r\n'
+            f'存档原链接：\r\n'
             f'其他外链：'
         )
 
