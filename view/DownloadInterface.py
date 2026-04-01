@@ -5,25 +5,25 @@ import webbrowser
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QGuiApplication
-from PySide6.QtWidgets import QFrame, QGridLayout, QLabel, QWidget, QSizePolicy, QHBoxLayout
+from PySide6.QtWidgets import QFrame, QGridLayout, QHBoxLayout, QLabel, QSizePolicy, QWidget
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import (
+    InfoBar,
     LineEdit,
     PushButton,
-    ToolButton,
     SwitchButton,
     TextEdit,
-    InfoBar,
+    ToolButton,
     ToolTipFilter,
     ToolTipPosition,
 )
 from yt_dlp import YoutubeDL
 
-from common.Config import cfg, SUCCESS, WARNING
-from common.MyThread import UpdateMessage, Download
+from common.Config import SUCCESS, WARNING, cfg
+from common.MyThread import Download, UpdateMessage
 from common.MyWidget import TableDialog
 from common.SignalBus import signal_bus
-from common.Style import StyleSheet, MyIcon
+from common.Style import MyIcon, StyleSheet
 
 
 class DownloadInterface(QFrame):
@@ -292,16 +292,16 @@ class DownloadInterface(QFrame):
 
     def start_download(self):
         self._path = (
-                cfg.get(cfg.download_folder)
-                + '/'
-                + self.video_title_input.text()
-                .replace(':', '')
-                .replace('.', '')
-                .replace('|', '')
-                .replace('\\', '')
-                .replace('/', '')
-                .replace('?', '')
-                .replace('"', '')
+            cfg.get(cfg.download_folder)
+            + '/'
+            + self.video_title_input.text()
+            .replace(':', '')
+            .replace('.', '')
+            .replace('|', '')
+            .replace('\\', '')
+            .replace('/', '')
+            .replace('?', '')
+            .replace('"', '')
         )
 
         quality = self.quality_input.text()
@@ -319,6 +319,7 @@ class DownloadInterface(QFrame):
                 # {'key': 'FFmpegSubtitlesConvertor', 'format': 'srt'},
                 {'key': 'FFmpegThumbnailsConvertor', 'format': 'jpg'}
             ],
+            'js_runtimes': {'node': {}},
         }
 
         if cfg.get(cfg.proxy_enable):
@@ -494,7 +495,7 @@ class DownloadInterface(QFrame):
 
     def on_upload_btn_clicked(self):
         if self._path == '':
-            self.show_finish_tooltip(self.tr('you haven\'t downloaded any videos yet'), WARNING)
+            self.show_finish_tooltip(self.tr("you haven't downloaded any videos yet"), WARNING)
             return
 
         self.save_data()

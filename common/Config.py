@@ -4,21 +4,21 @@ from enum import Enum
 
 from PySide6.QtCore import QLocale
 from qfluentwidgets import (
-    qconfig,
+    BoolValidator,
+    ConfigItem,
+    ConfigSerializer,
+    FolderValidator,
     OptionsConfigItem,
     OptionsValidator,
     QConfig,
-    ConfigItem,
     RangeConfigItem,
     RangeValidator,
-    BoolValidator,
-    ConfigSerializer,
-    FolderValidator,
+    qconfig,
 )
 
 from Path import BASE_DIR
 
-VERSION = '7.2.0-SNAPSHOT'
+VERSION = '7.3.0'
 LICENCE_PATH = f'{BASE_DIR}/res/LICENCE.html'
 
 LOG_PATH = 'log'

@@ -2,7 +2,7 @@ import logging
 from urllib.error import URLError
 
 from PySide6.QtCore import QThread, Signal
-from yt_dlp import YoutubeDL, DownloadError
+from yt_dlp import DownloadError, YoutubeDL
 from yt_dlp.extractor.youtube import YoutubeIE
 
 from common.Config import cfg
@@ -25,7 +25,7 @@ class UpdateMessage(QThread):
             handler = logging.StreamHandler()
             logger.addHandler(handler)
 
-            ydl_opts = {'logger': logger}
+            ydl_opts = {'logger': logger, 'js_runtimes': {'node': {}}}
             if cfg.get(cfg.proxy_enable):
                 ydl_opts['proxy'] = cfg.get(cfg.proxy)
                 ydl_opts['socket_timeout'] = 3000
